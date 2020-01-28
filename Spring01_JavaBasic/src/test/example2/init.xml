@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- WeaponImpl 객체를 생성하고 그 객체의 이름을 myWeapon 으로 부여한다. -->
+	<bean id="myWeapon" class="test.mypac.WeaponImpl"/>	<!-- WeaponImpl 이나 TestWeapon 이냐를 바꿔주면 수정이 끝난다. =>유지 보수의 장점. -->
+	<!--
+		myWeapon = new WeaponImpl(); 과 같다고 생각하면 된다.
+		스프링 프레임워크가 이 xml 문서를 읽어들이면 객체를 new 하는 과정이 되는 것이다.
+	 -->
+</beans>
+
+<!-- 
+	bean은 java에서 객체의 개념
+	beans는 객체들!
+	xml문서로 객체를 생성한다.
+	그러면 class 에서 직접 new 해서 생성할 필요가 없어지므로 관계가 느슨해진다. 
+	
+	class와 class 혹은 interface 와의 의존 관계가 느슨해지면 유지&보수가 쉬워진다. why? 만약 하나를 수정하는데 그와 의존되었던 다른 객체들이 영향을 받는다면 또 다른 수정사항이 생긴다. 이런식으로 꼬리를 문다면 유지보수가 힘들수 있다.
+ -->
