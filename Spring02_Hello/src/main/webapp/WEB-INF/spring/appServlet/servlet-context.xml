@@ -17,12 +17,22 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="prefix" value="/WEB-INF/views/" />	<!-- HomeController.java에서 return시킨  home 앞에 붙는것(prefix 접두어) value -->
+		<beans:property name="suffix" value=".jsp" />				<!-- home 뒤에 붙는것(suffix 접미어) value -->
 	</beans:bean>
 	
+	<!-- com.gura.spring02 패키지를 컴포넌트 스캔을 해서 bean 으로 만들어야 되는 
+		객체들은 bean 으로 만들어서 관리한다. 
+		component-scan 은 컨트롤러의 객체를 bean으로 만들어 두어 사용하도록 할 수 있게 한다.
+		-->
 	<context:component-scan base-package="com.gura.spring02" />
 	
 	
 	
 </beans:beans>
+
+<!-- 
+	DispatcherServlet의 동작을 준비하는 것 =>servlet-context.xml
+	
+	Apache Tomcat WebServer의 동작을 준비하는 것 =>web.xml
+ -->

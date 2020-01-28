@@ -30,6 +30,10 @@
 		<url-pattern>*.do</url-pattern>	<!-- default로는 /로 되어있다. =>모든 요청을 이 서블릿으로 처리하겠다. -->
 	</servlet-mapping>						<!-- *.do => .do로 끝나는 모든 요청을 처리하겠다. -->
 
+	<!-- 최상위 경로 요청이 왔을때 home.do 요청이 자동으로 되도록 설정 -->
+	<welcome-file-list>
+		<welcome-file>home.do</welcome-file>
+	</welcome-file-list>
 </web-app>
 <!--
 	DispatcherServlet 은 받은 요청에 대해 어떤 처리를 할 지 

@@ -1,5 +1,10 @@
 package com.gura.spring02;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +21,18 @@ public class HomeController {
 	
 	// /home.do 요청이 왔을 때 요청을 처리하게 하는   @RequestMapping 어노테이션
 	@RequestMapping("/home.do")
-	public String home() {
+	public String home(HttpServletRequest request) {	//HttpServletRequest, Response .. 필요한 객체를 선언만 하면 알아서 넣어준다.
+		//모델
+		List<String> notice=new ArrayList<>();	//예를들어 Model(데이터)로 취급.
+		notice.add("감기조심");
+		notice.add("코로나 조심");
+		notice.add("다들 살아서 봅시다..");
+		notice.add("어쩌구 ..");
+		notice.add("저쩌구 ..");
+		
+		//모델을 request에 담는다.
+		request.setAttribute("notice", notice);
+		
 		/*
 		 * 	"home" 을 리턴해주면 
 		 * 
@@ -24,7 +40,7 @@ public class HomeController {
 		 * 
 		 * 	/WEB-INF/views/home.jsp 페이지로 forward 이동되어서 응답된다.
 		 */
-		return "home";	//여기서 home은 ↑위에 경로에서의 home을 나타낸다.
+		return "home";	//여기서 home은 ↑위에 경로에서의 .jsp를 뺀 home을 나타낸다.
 	}
 	
 }
