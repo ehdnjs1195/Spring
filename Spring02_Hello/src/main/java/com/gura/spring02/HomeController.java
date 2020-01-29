@@ -21,7 +21,7 @@ public class HomeController {
 	
 	// /home.do 요청이 왔을 때 요청을 처리하게 하는   @RequestMapping 어노테이션
 	@RequestMapping("/home.do")
-	public String home(HttpServletRequest request) {	//HttpServletRequest, Response ..등등 필요한 객체를 선언만 하면 알아서 전달해준다. (forward될 때)
+	public String home(HttpServletRequest request) {	//HttpServletRequest, Response ..등등 필요한 객체를 선언만 하면 알아서 객체를 생성하고(객체를 사용할 수 있도록), view page에 전달해준다. (forward될 때)
 		//모델
 		List<String> notice=new ArrayList<>();	//예를들어 Model(데이터)로 취급.
 		notice.add("감기조심");
