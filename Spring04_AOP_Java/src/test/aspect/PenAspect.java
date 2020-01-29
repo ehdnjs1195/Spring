@@ -12,10 +12,12 @@ public class PenAspect {
 	 * 	리턴type 은 void, 메서드명은 write1
 	 * 	메서드에 전달되는 인자가 없는 메서드의
 	 *  수행 이전에 할 작업.
+	 *  
+	 *  aspectj expression(Before에 들어가는 문법! 공부는 1시간이면 충분!)
 	 */
 	@Before("execution(void write*())")	//스프링이 관리하고 있는 객체 메서드들 중에서 "execution(xxx)"모양의 갖고 있는 메서드가 수행되기 이전에! 이것을 적용해라. 이런 뜻!
 	public void prepare() {
 		System.out.println("Pen 을 준비해요!");
-	}
+	}	
 	
 }
