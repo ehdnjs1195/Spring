@@ -21,7 +21,7 @@ public class HomeController {
 	
 	// /home.do 요청이 왔을 때 요청을 처리하게 하는   @RequestMapping 어노테이션
 	@RequestMapping("/home.do")
-	public String home(HttpServletRequest request) {	//HttpServletRequest, Response .. 필요한 객체를 선언만 하면 알아서 넣어준다.
+	public String home(HttpServletRequest request) {	//HttpServletRequest, Response ..등등 필요한 객체를 선언만 하면 알아서 전달해준다. (forward될 때)
 		//모델
 		List<String> notice=new ArrayList<>();	//예를들어 Model(데이터)로 취급.
 		notice.add("감기조심");
@@ -39,6 +39,8 @@ public class HomeController {
 		 * 	"/WEB-INF/views/" + "home" + ".jsp" 와 같은 문자열이 만들어 지고 
 		 * 
 		 * 	/WEB-INF/views/home.jsp 페이지로 forward 이동되어서 응답된다.
+		 * 
+		 *  (자동으로 request model(data)을 가지고 forward이동된다!)
 		 */
 		return "home";	//여기서 home은 ↑위에 경로에서의 .jsp를 뺀 home을 나타낸다.
 	}
