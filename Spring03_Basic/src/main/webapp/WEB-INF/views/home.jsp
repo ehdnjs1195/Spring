@@ -6,8 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/home.jsp</title>
-</head>
-<body>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />	
+</head>					<!-- ${pageContext.request.contextPath }/ 까지의 경로가 webapp 이다. 이 경로는 web.xml에 있는 dispatcher를 거치지 않는다. (.do가 아니다) 이 경로는 따로 정적인 자원을 로딩하는 것이다.-->
+<body>					<!-- 이 경로는 또한 클라이언트들이 사용해야 하므로 .do를 거치면 안된다.(디스패쳐를 거치면 안된다) webapp는 공개폴더이지만 WEB-INF는 비공개폴더이기 때문이다. => WEB-INF경로와는 아무 상관이 없다!!! -->
 <h1>인덱스 페이지 입니다.</h1>
 <c:if test="${not empty id }">
 	<p>
