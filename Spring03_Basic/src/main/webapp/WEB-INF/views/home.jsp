@@ -17,7 +17,7 @@
 	</p>
 </c:if>
 <ul>
-	<li><a href="todo/list.do">할 일 목록 보기</a></li>
+	<li><a href="${pageContext.request.contextPath }/todo/list.do">할 일 목록 보기</a></li>
 	<li><a href="todo/list2.do">할 일 목록 보기2</a></li>
 	<li><a href="todo/list3.do">할 일 목록 보기3</a></li>
 	<li><a href="users/loginform.do">로그인 하러가기</a></li>
