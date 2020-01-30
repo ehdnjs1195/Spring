@@ -19,7 +19,9 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public List<MemberDto> getList() {
 		List<MemberDto> list=session.selectList("member.getList");	// MemberMapper를 가리키는 것이다.	 mapper의 namespace=>(member), <select id=>(메서드 getList) resultType=>(List 제너릭에 들어가는 MemberDto) >
-		return list;		//session은 원래 null이 맞지만  객체의 참조값을 스프링의 컨테이너에서 넣어주라 해서 참조값이 있다.		=>Dependency Injection 인터페이스 타입으로
+							//session은 원래 null이 맞지만  객체의 참조값을 스프링의 컨테이너에서 넣어주라 해서 참조값이 있다.		=>Dependency Injection 인터페이스 타입으로
+		
+		return list;		
 	}		
 	
 }
