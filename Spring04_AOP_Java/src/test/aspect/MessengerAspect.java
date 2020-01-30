@@ -15,7 +15,7 @@ public class MessengerAspect {
 	 * 
 	 * 	위의 3가지 조건을 모두 만족시키는 메서드에 아래의 aop 가 적용된다.
 	 */
-	@Around("execution(* send*(..))")
+	@Around("execution(* send*(..))")					//메서드 호출 직전 조작
 	public void around(ProceedingJoinPoint joinPoint) throws Throwable {
 		// aop 가 적용된 메서드 수행 직전
 		System.out.println("--수행 이전--");
@@ -42,7 +42,7 @@ public class MessengerAspect {
 		System.out.println("--수행 직후--");
 	}
 	
-	@Around("execution(String getMessage())")
+	@Around("execution(String getMessage())")			//메서드 호출 직후 조작
 	public Object around2(ProceedingJoinPoint joinPoint) throws Throwable {
 		//aop 가 적용된 메서드를 수행하고 리턴되는 값을 얻어낸다.
 		Object obj=joinPoint.proceed();
