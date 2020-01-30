@@ -21,8 +21,8 @@ public class PenAspect {
 		System.out.println("Pen 을 준비해요!");
 	}	//before는 해당 메서드가 호출될 때 바로 직전에 적용. after는 해당 메서드가 return 되고난 바로 직후에 적용.
 	
-	@After("execution(void write*())")
-	public void end() {
-		System.out.println("다쓰고 버려요.");
-	}
+//	@After("execution(void write*())")
+//	public void end() {
+//		System.out.println("다쓰고 버려요.");
+//	}
 }
