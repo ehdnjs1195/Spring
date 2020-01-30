@@ -9,7 +9,7 @@
 	
 	<!-- 밑에 Namespaces에서 context 추가  -->
 	<!-- 컴포넌트 스캔을 해서 bean 으로 만들 객체는 만들어준다. (test.mypac 패키지 하위를 스캔해서 bean으로 만들 객체는 만들어 준다.( 다 만드는 것은 아니다 @Component 되있는  것만)-->
-	<context:component-scan base-package="test.mypac"/>
+	<context:component-scan base-package="test.mypac"/>	<!-- 어떤 패키지를 스캔할 것인지 위치를 정하는 것. 스캔해서 bean으로 만들것들은 만들어서 관리를 한다. 만약 component-scan 으로 하지 않으면 bean 설정 class로 설정해주어야 한다.  -->
 	<context:component-scan base-package="test.aspect"/>
 
 	<!-- annotation 기반으로 aop 를 자동 적용하기 위한 설정(Namespaces에서 aop 추가) -->
