@@ -23,7 +23,10 @@ public class MemberDaoImpl implements MemberDao{
 		
 		return list;		
 	}		
-	
+	@Override
+	public void delete(int num) {
+		session.delete("member.delete",num);	//sql의 id 는 delete, parameter는 int type 의 num
+	}
 }
 
 /*

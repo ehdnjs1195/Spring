@@ -6,4 +6,9 @@
 		FROM member
 		ORDER BY num ASC
 	</select>
+	
+	<delete id="delete" parameterType="int">	<!-- #으로 써놓으면 내부적으로 알아서 ?를 가져온 파라미터로 바인딩 하게 된다. -->
+		DELETE from member
+		WHERE num=#{num}
+	</delete>
 </mapper>
