@@ -19,19 +19,42 @@
      	위와 같은 DB 접속 정보가 있어야만 동작한다.
 	-->	
 	<beans:bean id="dataSource" 
-		class="org.springframework.jndi.JndiObjectFactoryBean">
-		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>
-	</beans:bean>
+		class="org.springframework.jndi.JndiObjectFactoryBean">		<!-- JndiObjectFactoryBean 타입.  -->
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myoracle"/>	<!-- bean에서 value를 읽으면 /jdbc/myoracle을 new 하는 것이다. => dataSource = new JndiObjectFactoryBean() -->
+	</beans:bean>																									<!-- propertyName은 dataSource의 setter메서드를 호출하는 것이다. -->
+	<!-- 
+		(1)위의 설정을 java code 로 환산하면
+		
+		dataSource = new JndiObjectFactoryBean();	(객체를 만들고)
+		dataSource.setJudiName("java:comp/env/jdbc/myoracle");	(setter 메서드 호출하는 것이다.)
+	 -->																											
 	<beans:bean id="sessionFactory" 
 		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource"/>
-		<beans:property name="configLocation"
+		<beans:property name="dataSource" ref="dataSource"/>	<!-- ref="dataSource" 위에것을 참조 하고 있는 것.  ref="참조값 전달할 때", value="문자나 숫자열을 전달할 때" -->
+		<beans:property name="configLocation"					
 	value="classpath:com/gura/spring05/mybatis/Configuration.xml"/>
+	<!-- 
+		(2)위의 설정을 java code 로 환산하면
+		
+		sessionFactory = new SqlSessionFactoryBean();	(객체를 만들고)
+		sessionFactory.setDataSource(dataSource);	(세터메서드를 호출하고 참조값을 전달함(ref로). dataSource는 이미 위에서 만들어진 참조값.)
+		sessionFactory.setConfigLocation("classpath:com/gura/spring05/mybatis/Configuration.xml"); 		(세터 메서드를 호출해서 직접 value를 전달.)
+	 -->		
+	
 	</beans:bean>
 	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg name="sqlSessionFactory" 
 			ref="sessionFactory"/>
 	</beans:bean>
+	<!-- 
+		(3)위의 설정을 java code 로 환산하면
+		
+		new SqlSessionTemplate(sessionFactory);		(생성자의 인자로 참조값을 전달하면서 객체를 생성한다. 그리고 생성만 하고 변수로 지정하지 않음. => 스프링 빈으로 관리.)
+		
+		결론: class SqlSessionTemplate implements SqlSession{} 	=> SqlSession 인터페이스를 구현한 클래스를 이다. 이 객체는 모든 Dao가 의존한다. 필요할 때 넣어준다.
+	 -->
+	 
+	 
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
