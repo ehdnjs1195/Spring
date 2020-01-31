@@ -14,7 +14,7 @@ public class MemberDaoImpl implements MemberDao{
 	//핵심 의존 객체를 spring 으로 부터 주입 받기(Dependency Injection (DI))
 	@Autowired
 	private SqlSession session;		//SqlSession이란 타입 객체가 있으면 session이란 필드를 사용할 때 값을 넣어줘라!!
-	
+	//SqlSession 은 servlet-context.xml 에서 이미 미리 다 준비가 되어 있는 상태이다! 그래서 받고 받고 받고.. 단계를 거친것이다. 그렇기 때문에 메서드를 통해서 맵퍼를 사용할 수 있게된다. 맵퍼는 configuration 어쩌구에서 이미 준비가 되어 있는것.
 	
 	@Override
 	public List<MemberDto> getList() {
@@ -30,6 +30,6 @@ public class MemberDaoImpl implements MemberDao{
 }
 
 /*
- *	select를 했을 때 row가 여러개면 selectList를 한다 => List를 리턴
+ *	select를 했을 때 row가 여러개면 selectList를 한다 => List를 리턴 => List<> 타입으로 받아야 한다.
  *	select된 row 하나 하나 담을 타입을 결정하는 것이 resultType => Dto, int, String, Map<> 등등.. 
  */

@@ -32,7 +32,7 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>	<!-- ref="dataSource" 위에것을 참조 하고 있는 것.  ref="참조값 전달할 때", value="문자나 숫자열을 전달할 때" -->
 		<beans:property name="configLocation"					
-	value="classpath:com/gura/spring05/mybatis/Configuration.xml"/>
+	value="classpath:com/gura/spring05/mybatis/Configuration.xml"/>	<!-- 맵퍼를 준비하는 xml이다. 경로에 주의해서 정확히 써주어야 한다! -->
 	<!-- 
 		(2)위의 설정을 java code 로 환산하면
 		
