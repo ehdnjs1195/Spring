@@ -7,7 +7,7 @@
 		ORDER BY num ASC
 	</select>
 	
-	<delete id="delete" parameterType="int">	<!-- #으로 써놓으면 내부적으로 알아서 ?를 가져온 파라미터로 바인딩 하게 된다. -->
+	<delete id="delete" parameterType="int">	<!-- #{안에 내용은 아무렇게나 써도 된다.의미를 알게 쉽도록 쓰기. 단, Dto를 전달했으면 필드명을 정확히 전달해야 한다.}으로 써놓으면 내부적으로 알아서 ?에 가져온 파라미터로 바인딩 하게 된다. -->
 		DELETE from member
 		WHERE num=#{num}
 	</delete>
