@@ -32,6 +32,13 @@ public class MemberDaoImpl implements MemberDao{
 	public void insert(MemberDto dto) {
 		session.insert("member.insert", dto);
 	}
+	
+	@Override
+	public MemberDto getData(int num) {
+		MemberDto dto=session.selectOne("member.getData", num);
+		//이 셀렉트는 row가 하나 짜리이다.(목록이 아닌) 따라서 selectOne 메서드를 이용하고 resultType => MemberDto 를 통해 Dto에 담아준다.
+		return dto;
+	}
 }
 
 /*
