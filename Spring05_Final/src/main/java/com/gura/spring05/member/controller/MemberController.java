@@ -72,4 +72,12 @@ public class MemberController {
 		mView.setViewName("member/updateform");
 		return mView;
 	}
+	
+	@RequestMapping("/member/update")
+	public ModelAndView update(@ModelAttribute("dto") MemberDto dto, ModelAndView mView) {
+		dao.update(dto);
+//		mView.addObject("dto",dto);
+		mView.setViewName("member/update");
+		return mView;
+	}
 }
