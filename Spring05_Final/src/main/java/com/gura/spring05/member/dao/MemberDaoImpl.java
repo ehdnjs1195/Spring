@@ -27,6 +27,11 @@ public class MemberDaoImpl implements MemberDao{
 	public void delete(int num) {
 		session.delete("member.delete",num);	//sql의 id 는 delete, parameter는 int type 의 num
 	}
+	
+	@Override
+	public void insert(MemberDto dto) {
+		session.insert("member.insert", dto);
+	}
 }
 
 /*

@@ -34,4 +34,21 @@
 	<welcome-file-list>
 		<welcome-file>home.do</welcome-file>
 	</welcome-file-list>
+	
+	
+	<!-- 스프링이 제공하는 인코딩 필터! -->
+	<!-- post 방식 전송될때  한글 깨지지 않도록 Spring 인코딩 필터 정의하기  -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>		<!-- 여기에 직접 @Filter 어노테이션을 할 수 없으니  -->
+	<init-param>									<!-- @WebFilter("/*") -->
+		<param-name>encoding</param-name>			<!-- class CharacterEncodingFilter implements Filter{} -->
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<!-- Spring 인코딩 필터 맵핑하기 -->
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>		<!-- 모든 요청에 대해서 필터링! -->
+	</filter-mapping>	
 </web-app>
