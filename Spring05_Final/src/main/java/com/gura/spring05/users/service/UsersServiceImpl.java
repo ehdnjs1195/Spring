@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gura.spring05.users.dao.UsersDao;
+import com.gura.spring05.users.dto.UsersDto;
 
 @Service
 public class UsersServiceImpl implements UsersService{
@@ -20,5 +21,9 @@ public class UsersServiceImpl implements UsersService{
 		Map<String, Object> map=new HashMap<>();
 		map.put("isExist", isExist);	//=> {"isExist":true} or {"isExist":false} 이런식으로 응답 됨. 따로 jsp페이지를 만들지 않고도.
 		return map;
+	}
+	@Override
+	public void addUser(UsersDto dto) {
+		dao.insert(dto);
 	}
 }
