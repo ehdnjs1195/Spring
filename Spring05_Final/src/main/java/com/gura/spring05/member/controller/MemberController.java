@@ -11,22 +11,30 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.member.dao.MemberDao;
 import com.gura.spring05.member.dto.MemberDto;
-
+import com.gura.spring05.member.service.MemberService;
+/*
+ * 	Controller의 역할!
+ *  1. 어떤 요청에 대해서	(@RequestMapping)
+ *  2. 어떤 로직을 처리하고 (service)
+ *  3. 어떤 view page로 이동할지. (setViewName)
+ * 
+ */
 @Controller
 public class MemberController {
 	// 의존 객체 주입받기 (DI)
 	@Autowired
 	private MemberDao dao;		//Dao의 타입이 여러개라면 @Resource(name="xxx") 으로 특정 타입을 받을 수 있다. 이름 부여는 @Repository("xxx") 어노테이션으로 빈의 이름을 부여할 수 있다.
+	@Autowired
+	private MemberService service;
 	
 	// 회원 목록 보기 요청(/member/list.do) 을 처리할 컨트롤러의 메서드
 	@RequestMapping("/member/list")
 	public ModelAndView list(ModelAndView mView) {
-		//회원 목록을 얻어오려면?
-		List<MemberDto> list=dao.getList();
-		
-		mView.addObject("list",list);
+		//MemberServiceImpl 객체를 이용해서 비즈니스 로직 처리
+		service.getList(mView);
+		//view page 정보를 담고
 		mView.setViewName("member/list");	
-		return mView;
+		return mView; //Model 과 view page 정보가 담긴 객체를 리턴해준다.
 	}
 	
 	//회원정보 삭제 요청 처리
