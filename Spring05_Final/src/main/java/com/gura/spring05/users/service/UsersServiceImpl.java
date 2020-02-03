@@ -19,6 +19,6 @@ public class UsersServiceImpl implements UsersService{
 		boolean isExist=dao.isExist(inputId);
 		Map<String, Object> map=new HashMap<>();
 		map.put("isExist", isExist);	//=> {"isExist":true} or {"isExist":false} 이런식으로 응답 됨. 따로 jsp페이지를 만들지 않고도.
-		return null;
+		return map;
 	}
 }
