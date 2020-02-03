@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/home.jsp</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<jsp:include page="include/resource.jsp"/>	<!-- 파라미터 전달할 게 없으면 바로 닫아주면 된다. -->
 </head>
 <body>
+<jsp:include page="include/navbar.jsp"/>
 <div class="container">
 	<h1>인덱스 페이지 입니다.</h1>
 	<ul>
