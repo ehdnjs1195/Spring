@@ -27,7 +27,7 @@ public class UsersController {
 	 * 	3. List, Map, Dto 중에 하나를 리턴한다.
 	 */
 	@ResponseBody
-	@RequestMapping("/users/checkid")
+	@RequestMapping("/users/checkid")	//http://localhost:8888/spring05/users/checkid.do?inputId=123 직접 url에 쳐보면 json이 출력되는 것을 확인할 수 있다.
 	public Map<String, Object> checkid(@RequestParam String inputId){
 		Map<String, Object> map=service.isExistId(inputId);
 		return map;
