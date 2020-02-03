@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-//1. Controller 어노테이션(이게 상속이나 구현 등의 작업을 할 필요없게 해준다.)
+//1. Controller 어노테이션(이게 상속이나 구현 등의 작업을 할 필요없게 해준다. 원래 예전 버전에서는 SpringController라는 인터페이스를 구현해서 써야 했다.)
 @Controller
 public class TodoController {
 

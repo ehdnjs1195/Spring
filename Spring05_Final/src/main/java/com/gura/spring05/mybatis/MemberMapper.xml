@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">	<!-- mapper 안에서 insert,update,select,delete 등의 작업을 하게 된다! -->
-	<select id="getList" resultType="com.gura.spring05.member.dto.MemberDto">	<!-- resultType => ctrl+space 로 자동완성. -->
+	<select id="getList" resultType="memberDto">	<!-- resultType => ctrl+space 로 자동완성. -->
 		SELECT num, name, addr
 		FROM member
 		ORDER BY num ASC
 	</select>
 	
-	<delete id="delete" parameterType="int">	<!-- #으로 써놓으면 내부적으로 알아서 ?를 가져온 파라미터로 바인딩 하게 된다. -->
+	<delete id="delete" parameterType="int">	<!-- #{안에 내용은 아무렇게나 써도 된다.의미를 알게 쉽도록 쓰기. 단, Dto를 전달했으면 필드명을 정확히 전달해야 한다.}으로 써놓으면 내부적으로 알아서 ?에 가져온 파라미터로 바인딩 하게 된다. -->
 		DELETE from member
 		WHERE num=#{num}
 	</delete>
+	
+	<insert id="insert" parameterType="memberDto">
+		INSERT INTO member
+		(num, name, addr)
+		VALUES(member_seq.NEXTVAL, #{name}, #{addr})
+	</insert>		<!-- #{name} => dto.getName(), #{addr} => dto.getAddr()  주의!! 중괄호 안에 들어가는 이름은 Dto의 필드명과 정확히 일치해야 한다. -->
+	
+	<select id="getData" parameterType="int" resultType="memberDto">
+		SELECT num, name, addr
+		FROM member
+		WHERE num=#{num}
+	</select>
+	
+	<update id="update" parameterType="memberDto">
+		UPDATE member
+		SET name=#{name}, addr=#{addr}
+		WHERE num=#{num}
+	</update>
 </mapper>
+
+<!-- 
+	SqlSession은 과연 어떻게 맵퍼를 찾아가서 사용하는가?!
+	연결고리가 있는것이다.
+	servlet-context.xml에서 보면 sqlSession 을 생성하면서 sqlSessionFactory을 전달한다. 
+	selSessionFactory는 Configuration.xml을 받는다. 그 안에는 사용하는 맵퍼를 명시해둔다. 
+	따라서 servlet-context.xml은 서버가 시작될때 로딩되므로 맵퍼를 사용할 준비가 되는 것이다!!  
+-->

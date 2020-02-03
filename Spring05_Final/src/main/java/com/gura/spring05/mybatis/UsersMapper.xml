@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">	
+	<select id="isExist" parameterType="String" resultType="String">
+		select id
+		from users
+		where id=#{inputId}
+	</select>
+	<insert id="insert" parameterType="usersDto">
+		INSERT INTO users
+		(id, pwd, email, regdate)
+		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
+	</insert>	<!-- 자동으로 바인딩 되려면 필드명을 정확하게 적어주어야 한다. -->
+</mapper>
+
