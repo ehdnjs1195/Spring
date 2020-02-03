@@ -22,9 +22,7 @@ import com.gura.spring05.member.service.MemberService;
 @Controller
 public class MemberController {
 	// 의존 객체 주입받기 (DI)
-	@Autowired
-	private MemberDao dao;		//Dao의 타입이 여러개라면 @Resource(name="xxx") 으로 특정 타입을 받을 수 있다. 이름 부여는 @Repository("xxx") 어노테이션으로 빈의 이름을 부여할 수 있다.
-	@Autowired
+	@Autowired 					//Dao의 타입이 여러개라면 @Resource(name="xxx") 으로 특정 타입을 받을 수 있다. 이름 부여는 @Repository("xxx") 어노테이션으로 빈의 이름을 부여할 수 있다.
 	private MemberService service;
 	
 	// 회원 목록 보기 요청(/member/list.do) 을 처리할 컨트롤러의 메서드
@@ -40,8 +38,7 @@ public class MemberController {
 	//회원정보 삭제 요청 처리
 	@RequestMapping("/member/delete")
 	public String delete(@RequestParam int num) {	//int num 하면 알아서 int type으로 바꿔줌.
-		//MemberDao 객체를 이용해서 회원정보 삭제
-		dao.delete(num);
+		service.deleteMember(num);
 		//리다일렉트 응답
 		return "redirect:/member/list.do";
 	}
@@ -73,10 +70,8 @@ public class MemberController {
 	
 	@RequestMapping("/member/updateform")
 	public ModelAndView updateform(@RequestParam int num, ModelAndView mView) {
-		//수정할 회원의 정보를 얻어와서
-		MemberDto dto=dao.getData(num);
-		//"dto"라는 키 값으로 request 영역에 담기도록 하고
-		mView.addObject("dto",dto);
+		//ModelAndView 객체에 회원정보가 담기도록 서비스의 메서드 호출
+		service.getMember(mView, num);
 		//view page 로 forward 이동해서 수정할 회원의 정보를 출력해 준다.
 		mView.setViewName("member/updateform");
 		return mView;
@@ -84,7 +79,8 @@ public class MemberController {
 	
 	@RequestMapping("/member/update")
 	public ModelAndView update(@ModelAttribute("dto") MemberDto dto, ModelAndView mView) {
-		dao.update(dto);
+		//회원 정보가 수정 되도록 서비스의 메서드 호출
+		service.updateMember(dto);
 //		mView.addObject("dto",dto);
 		mView.setViewName("member/update");
 		return mView;
