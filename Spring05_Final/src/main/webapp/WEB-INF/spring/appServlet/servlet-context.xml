@@ -26,7 +26,7 @@
 		(1)위의 설정을 java code 로 환산하면
 		
 		dataSource = new JndiObjectFactoryBean();	(객체를 만들고)
-		dataSource.setJudiName("java:comp/env/jdbc/myoracle");	(setter 메서드 호출하는 것이다.)
+		dataSource.setJudiName("java:comp/env/jdbc/myoracle");	(setter 메서드 호출하는 것이다.(property))
 	 -->																											
 	<beans:bean id="sessionFactory" 
 		class="org.mybatis.spring.SqlSessionFactoryBean">

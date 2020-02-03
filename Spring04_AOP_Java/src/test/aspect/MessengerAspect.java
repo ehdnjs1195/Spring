@@ -16,7 +16,7 @@ public class MessengerAspect {
 	 * 	위의 3가지 조건을 모두 만족시키는 메서드에 아래의 aop 가 적용된다.
 	 */
 	@Around("execution(* send*(..))")					//메서드 호출 직전 조작
-	public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+	public void around(ProceedingJoinPoint joinPoint) throws Throwable {	// ProceedingJoinPoint는 Around에서만 사용할 수 있다 , joinPoint의 proceed() 메서드가 exception을 발생시키기 대문에 throws 해준다.
 		// aop 가 적용된 메서드 수행 직전
 		System.out.println("--수행 이전--");
 		
@@ -24,7 +24,7 @@ public class MessengerAspect {
 		Object[] args=joinPoint.getArgs();
 		// 반복문 돌면서 찾고싶은 type 을 찾는다.
 		for(Object tmp:args) {
-			if(tmp instanceof String) {// 만일 String type 이면   instanceof 연산자를 이용하면 그 객체의 원래 타입을 알 수 있다.	=>의문점. Object 배열인데 왜 타입을 확인하는가. =>메서드에 전달되는 인자들의 타입이 각기 다를 수 있기 때문에.
+			if(tmp instanceof String) {// 만일 String type 이면,   instanceof 연산자를 이용하면 그 객체의 원래 타입을 알 수 있다.	=>의문점. Object 배열인데 왜 타입을 확인하는가. =>메서드에 전달되는 인자들의 타입이 각기 다를 수 있기 때문에.
 				//원래 type 으로 casting
 				String msg=(String)tmp;
 				System.out.println("aop 에서 읽어낸 내용: "+msg);
