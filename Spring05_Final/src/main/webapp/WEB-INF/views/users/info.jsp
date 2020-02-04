@@ -44,6 +44,10 @@
 			</td>
 		</tr>
 		<tr>
+			<th>프로필경로보기</th>
+			<td><strong>${profile }</strong></a></td>
+		</tr>
+		<tr>
 			<th>비밀번호</th>
 			<td><a href="pwd_updateform.do">수정하기</a></td>
 		</tr>

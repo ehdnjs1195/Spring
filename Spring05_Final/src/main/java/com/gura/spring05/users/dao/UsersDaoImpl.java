@@ -41,4 +41,8 @@ public class UsersDaoImpl implements UsersDao{
 	public UsersDto getData(String id) {
 		return session.selectOne("users.getData", id);	//직접 return 해준다.
 	}
+	@Override
+	public void updateProfile(UsersDto dto) {
+		session.update("users.updateProfile",dto);
+	}
 }
