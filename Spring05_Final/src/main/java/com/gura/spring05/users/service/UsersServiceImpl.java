@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gura.spring05.users.dao.UsersDao;
@@ -24,6 +25,11 @@ public class UsersServiceImpl implements UsersService{
 	}
 	@Override
 	public void addUser(UsersDto dto) {
+		//비밀전호를 암호화 한다.
+		String encodedPwd=new BCryptPasswordEncoder().encode(dto.getPwd());		//@Autowired를 해서 객체를 하나만 생성해서 사용하면 더 나은 구조가 된다.
+		//암호화된 비밀번호를 UsersDto에 다시 넣어준다.
+		dto.setPwd(encodedPwd);
+		//UsersDao 객체를 이용해서 DB에 저장하기
 		dao.insert(dto);
 	}
 }

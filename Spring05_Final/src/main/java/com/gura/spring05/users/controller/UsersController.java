@@ -2,6 +2,9 @@ package com.gura.spring05.users.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,5 +45,35 @@ public class UsersController {
 		service.addUser(dto);
 		mView.setViewName("users/insert");
 		return mView;
+	}
+	
+	//로그인 폼 요청 처리
+	@RequestMapping("/users/loginform")
+	public String loignform(HttpServletRequest request) {
+		// "url" 이라는 파라미터가 넘어오는지 읽어와 본다.
+		String url=request.getParameter("url");
+		if(url==null){//만일 없으면  (url이 null인 경우는 필터를 거치지 않고 loginform.jsp로 왔을 때이다. ex) index.jsp에서 로그인 버튼 눌렀을 때)
+			//로그인 성공후에 index.jsp 페이지로 보낼 수 있도록 구성한다.
+			url=request.getContextPath()+"/";	//home.do로 감.
+		}
+		
+		//아이디, 비밀번호가 쿠키에 저장되었는지 확인해서 저장되었으면 폼에 출력한다.
+		Cookie[] cookies=request.getCookies();
+		//저장된 아이디와 비밀번호를 담을 변수 선언하고 초기값으로 빈 문자열 대입
+		String savedId="";
+		String savedPwd="";
+		if(cookies != null){
+			for(Cookie tmp:cookies){
+				if(tmp.getName().equals("savedId")){
+					savedId=tmp.getValue();
+				}else if(tmp.getName().equals("savedPwd")){
+					savedPwd=tmp.getValue();
+				}
+			}
+		}
+		request.setAttribute("url", url);
+		request.setAttribute("savedId", savedId);
+		request.setAttribute("savedPwd", savedPwd);
+		return "users/loginform";
 	}
 }
