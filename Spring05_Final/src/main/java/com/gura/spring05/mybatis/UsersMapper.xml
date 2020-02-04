@@ -16,7 +16,7 @@
 		WHERE id = #{inputId}
  	</select>
  	<select id="getData" parameterType="String" resultType="usersDto">
- 		SELECT id,email,regdate,profile 
+ 		SELECT id,pwd,email,regdate,profile 
  		FROM users
  		WHERE id = #{id}
  	</select>
@@ -25,5 +25,14 @@
  		SET profile=#{profile}
  		WHERE id=#{id}
  	</update>
+ 	<update id="updatePwd" parameterType="usersDto">
+ 		UPDATE users
+ 		SET pwd=#{pwd}
+ 		WHERE id=#{id}
+ 	</update>
+ 	<select id="getProfile" parameterType="String" resultType="String">
+ 		select profile from users
+ 		where id=#{id}
+ 	</select>
 </mapper>
 

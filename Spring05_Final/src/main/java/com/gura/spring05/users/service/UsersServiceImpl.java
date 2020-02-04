@@ -53,6 +53,9 @@ public class UsersServiceImpl implements UsersService{
 		if(isValid) {
 			//로그인 처리를 한다.
 			session.setAttribute("id", dto.getId());
+			String profile=dao.getProfile(dto.getId());
+			session.setAttribute("profile", profile);
+			System.out.println(dto.getId()+"|"+profile);
 		}
 	}
 	@Override
@@ -95,8 +98,26 @@ public class UsersServiceImpl implements UsersService{
 		dto.setProfile(path);
 		// UsersDao 를 이용해서 DB 에 반영하기 
 		dao.updateProfile(dto);
-		
+		request.getSession().setAttribute("profile", dto.getProfile());
 		//이미지 경로 리턴해주기 
 		return path;
+	}
+	
+	@Override
+	public void updatePassword(UsersDto dto, ModelAndView mView) {
+		//1. 예전 비밀번호가 맞는 정보인지 확인
+		String pwdHash=dao.getData(dto.getId()).getPwd();	//저장된 암호 읽어오기
+		boolean isValid=BCrypt.checkpw(dto.getPwd(), pwdHash);	//dto.getPwd()는 입력한 예전 비밀번호, pwdHash는 암호화 되어 저장된 비밀번호. 둘을 비교함.
+		//2. 만일 맞다면 새로 비밀번호를 암호화 해서 저장하기
+		if(isValid) {
+			//새 비밀번호를 암호화해서 dto 에 담고
+			String encodedPwd=new BCryptPasswordEncoder().encode(dto.getNewPwd());
+			dto.setPwd(encodedPwd);	
+			//DB 에 수정 반영하기
+			dao.updatePwd(dto);
+			mView.addObject("isSuccess",true);
+		}else {
+			mView.addObject("isSuccess",false);			
+		}
 	}
 }
