@@ -1,9 +1,11 @@
 package com.gura.spring05.users.controller;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,5 +77,44 @@ public class UsersController {
 		request.setAttribute("savedId", savedId);
 		request.setAttribute("savedPwd", savedPwd);
 		return "users/loginform";
+	}
+	
+	//로그인 요청 처리
+	@RequestMapping(value = "/users/login", method=RequestMethod.POST)
+	public ModelAndView login(@ModelAttribute UsersDto dto, ModelAndView mView,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		//목적지 정보
+		String url=request.getParameter("url");
+		if(url==null){
+			url=request.getContextPath()+"/home.do";
+		}
+		//목적지 정보를 미리 인코딩 해놓는다.
+		String encodedUrl=URLEncoder.encode(url);
+		//view page 에 전달하기
+		mView.addObject("url",url);
+		mView.addObject("encodedUrl",encodedUrl);
+		
+		//4. 아이디 비밀번호 저장 체크박스를 체크 했는지 읽어와 본다.
+		String isSave=request.getParameter("isSave");
+		//아이디, 비밀번호를 쿠키에 저장하기
+		Cookie idCook=new Cookie("savedId", dto.getId());
+		Cookie pwdCook=new Cookie("savedPwd", dto.getPwd());
+		if(isSave !=null){	//null 이 아니면 체크한 것이다.
+			idCook.setMaxAge(60*60*24*30); //한 달.
+			pwdCook.setMaxAge(60*60*24*30);
+			
+		}else{
+			idCook.setMaxAge(0);	//MaxAge를 0로 해두면 쿠키가 지워진다.
+			pwdCook.setMaxAge(0);
+		}
+		//응답할 때 쿠키도  심어지도록
+		response.addCookie(idCook);
+		response.addCookie(pwdCook);	//response에 담아두면 view page로 넘어갈 때 같이 넘어간다.
+		
+		service.validUser(dto, request.getSession(), mView);	//request를 통해 session을 얻어낸다.
+		
+		mView.setViewName("users/login");	
+		return mView;
 	}
 }

@@ -11,5 +11,9 @@
 		(id, pwd, email, regdate)
 		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>	<!-- 자동으로 바인딩 되려면 필드명을 정확하게 적어주어야 한다. -->
+	<select id="getPwdHash" parameterType="String" resultType="String">
+		SELECT pwd FROM users
+		WHERE id = #{inputId}
+ 	</select>
 </mapper>
 
