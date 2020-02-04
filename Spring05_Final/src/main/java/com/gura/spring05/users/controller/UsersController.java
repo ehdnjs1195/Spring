@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,5 +117,24 @@ public class UsersController {
 		
 		mView.setViewName("users/login");	
 		return mView;
+	}
+	
+	//로그아웃 처리
+	@RequestMapping("/users/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/home.do";
+	}
+	
+	//개인 정보 보기 요청 처리
+	@RequestMapping("/users/info")	//이 요청은 로그인을 해야만 받을 수 있도록 AOP에서 거른다.
+	public ModelAndView authInfo(HttpServletRequest request, ModelAndView mView) {	// AOP를 사용하기 위해 메서드 앞에 auth 를 붙여서 구분하도록 한다. 
+		//로그인 된 아이디 읽어오기
+		String id=(String)request.getSession().getAttribute("id");
+		//UsersService 객체를 이용해서 개인정보를 ModelAndView 객체에 담기도록 한다.
+		service.showInfo(id, mView);
+		//view page 정보를 담고
+		mView.setViewName("users/info");
+		return mView;//ModelAndView 객체를 리턴해주기
 	}
 }
