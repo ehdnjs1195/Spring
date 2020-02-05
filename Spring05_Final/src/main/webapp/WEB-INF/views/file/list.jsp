@@ -101,7 +101,7 @@
 				<a href="list.do?pageNum=${totalPageCount }">끝으로</a>
 			</li>
 		</ul>	
-	<a class="btn btn-primary pull-right" href="${pageContext.request.contextPath }/file/private/upload_form.do" id="a">파일 업로드</a>
+	<a class="btn btn-primary pull-right" href="${pageContext.request.contextPath }/file/upload_form.do" id="a">파일 업로드</a>
 	</div>
 </div>
 <script>

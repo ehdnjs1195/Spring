@@ -5,7 +5,7 @@
 		SELECT MAX(ROWNUM)
 		FROM board_file
 	</select>
-	<select id="getList" parameterType="FileDto" resultType="FileDto">	
+	<select id="getList" parameterType="fileDto" resultType="fileDto">	
 		SELECT *
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
