@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.file.dao.FileDao;
 import com.gura.spring05.file.dto.FileDto;
@@ -93,8 +94,8 @@ public class FileServiceImpl implements FileService{
 		String saveFileName=
 				System.currentTimeMillis()+orgFileName;
 		try{
-			//upload 폴더에 파일을 저장한다.
-			mFile.transferTo(new File(filePath+saveFileName));
+			//upload 폴더에 파일을 저장한다. (저장해 둔것을 옮겨오는 작업. 옮겨와야 저장이 된다.)
+			mFile.transferTo(new File(filePath+saveFileName));	// 어디에 저장할지에 대한 파일 객체를 넣어준다. 결국 경로는 /upload 이다. 그리고 실제 파일은 upload 폴더에 있다. 
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -106,5 +107,18 @@ public class FileServiceImpl implements FileService{
 		dto.setFileSize(fileSize);
 		//FileDao 객체를 이용해서 DB 에 저장하기
 		dao.insert(dto);			
+	}
+	
+	@Override
+	public void getFileData(ModelAndView mView, int num) {
+		//다운로드 시켜줄 파일의 정보를 어다
+		FileDto dto=dao.getData(num);
+		//ModelAndView 객체에 담아주기
+		mView.addObject("dto", dto);
+	}
+	@Override
+	public void addDownCount(int num) {
+		//다운로드 횟수 증가 시키기
+		dao.addDownCount(num);
 	}
 }

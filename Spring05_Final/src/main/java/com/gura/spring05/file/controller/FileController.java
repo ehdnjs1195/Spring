@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.file.dto.FileDto;
@@ -34,8 +35,16 @@ public class FileController {
 	
 	//파일 업로드 요청 처리
 	@RequestMapping(value = "/file/upload", method = RequestMethod.POST)
-	public ModelAndView authUpload(HttpServletRequest request, @ModelAttribute FileDto dto) {
+	public ModelAndView authUpload(HttpServletRequest request, @ModelAttribute FileDto dto) {	//폼이 제출 되면서 제목과 파일정보가 자동으로 dto에 저장된다.
 		service.saveFile(request, dto);
 		return new ModelAndView("redirect:/file/list.do");
+	}
+	//파일 다운로드 처리
+	@RequestMapping("/file/download")
+	public ModelAndView download(ModelAndView mView, @RequestParam int num) {	//파일 정보를 int num을 이용해서 select 하고 
+		service.getFileData(mView, num);
+		service.addDownCount(num);
+		mView.setViewName("file/download");
+		return mView;
 	}
 }
