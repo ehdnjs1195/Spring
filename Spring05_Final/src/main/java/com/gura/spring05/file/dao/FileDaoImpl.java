@@ -35,4 +35,8 @@ public class FileDaoImpl implements FileDao{
 	public void addDownCount(int num) {
 		session.update("file.addDownCount", num);
 	}
+	@Override
+	public void delete(int num) {
+		session.delete("file.delete", num);
+	}
 }
