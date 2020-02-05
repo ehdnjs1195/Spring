@@ -81,6 +81,12 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10240000"/> <!-- 대략 10MB (곱하기 안됨) -->
 	</beans:bean>
+	
+	<!-- bean 의 이름으로 view 를 찾아갈 수 있도록 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<!-- 0 순위로 찾아가도록 하고 없으면 자동으로  views 폴더 안에서 jsp 페이지를 찾는다. -->
+		<beans:property name="order" value="0"/>	<!-- setter method 임. setOrder(0)-->
+	</beans:bean>
 </beans:beans>
 
 <!-- 서버가 시작되면 여기있는 내용을 읽고 준비를 한다. Spring04나 Spring01의 init.xml 과 비슷하다고 생각 하면 된다. -->
