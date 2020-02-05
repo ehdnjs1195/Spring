@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">	
 	<select id="getCount" resultType="int">	<!-- 전체 글의 개수 리턴 -->
-		SELECT NVL(MAX(ROWNUM), 0)
+		SELECT NVL(MAX(ROWNUM), 0) <!-- 테이블이 아무것도 없으면 rownum은 null이 되기 때문에 파싱이 되지 않아서 exception이 발생하게 된다! 따라서 nvl로 null이면 0을 넣어준다. -->
 		FROM board_file
 	</select>
 	<select id="getList" parameterType="fileDto" resultType="fileDto">
