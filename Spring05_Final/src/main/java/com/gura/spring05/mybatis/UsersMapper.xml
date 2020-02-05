@@ -34,5 +34,10 @@
  		select profile from users
  		where id=#{id}
  	</select>
-</mapper>
+ 	<update id="updateUser" parameterType="usersDto" >
+ 		UPDATE users
+ 		SET email=#{email}
+ 		WHERE id=#{id}
+ 	</update>
+</mapper> 
 
