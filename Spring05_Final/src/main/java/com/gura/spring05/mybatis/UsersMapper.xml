@@ -39,5 +39,9 @@
  		SET email=#{email}
  		WHERE id=#{id}
  	</update>
+ 	<delete id="delete" parameterType="String">
+ 		DELETE FROM users
+ 		WHERE id=#{id}
+ 	</delete>	<!-- $ 로 쓰려면 '' 안에 써야한다. ex) '$ {id}'  => 'gura' 이런식으로 sql문을 먼저 완성시키는 역할이다. -->
 </mapper> 
 
