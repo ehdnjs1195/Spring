@@ -26,3 +26,6 @@ public class ExceptionController {
 		return mView;
 	}	
 }
+
+//파일 삭제할 때 예외를 발생시키는 방법
+// 다른 아이디로 접속한 뒤에 url에 직접 /file/delete.do?num=55 치면 된다.
