@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe">
-	<select id="getCount" resultType="int">	<!-- 전체 글의 개수 리턴 -->
-		SELECT MAX(ROWNUM)
+	<select id="getCount" parameterType="cafeDto" resultType="int">	<!-- 전체 글의 개수 리턴 -->
+		SELECT NVL(MAX(ROWNUM), 0)
 		FROM board_cafe
+		<choose>	<!-- 아래와 조건은 같다. -->
+			<when test="title != null and writer != null">
+				WHERE title LIKE '%${title }%' OR writer LIKE '%${writer}%'
+			</when>		
+			<when test="title != null">
+				WHERE title LIKE '%${title }%'
+			</when>
+			<when test="writer != null">
+				WHERE writer LIKE '%${writer }%'
+			</when>
+		</choose>
 	</select>
 	<select id="getList" parameterType="cafeDto" resultType="cafeDto">	
 		SELECT *
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
 			FROM
-				(SELECT num,writer,title,viewCount,to_char(regdate, 'yyyy\"년\"mm\"월\"dd\"일\" hh24\"시\"mi\"분\"') as regdate
+				(SELECT num,writer,title,viewCount,to_char(regdate, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"') as regdate
 				FROM board_cafe
+				<choose>	<!-- 아래와 조건은 같다. -->
+					<when test="title != null and writer != null">
+						WHERE title LIKE '%${title }%' OR writer LIKE '%${writer}%'
+					</when>		
+					<when test="title != null">
+						WHERE title LIKE '%${title }%'
+					</when>
+					<when test="writer != null">
+						WHERE writer LIKE '%${writer }%'
+					</when>
+				</choose>
 				ORDER BY num DESC) result1)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
-	<select id="searchList" parameterType="cafeDto" resultType="cafeDto">
-		SELECT *
-		FROM
-			(SELECT result1.*, ROWNUM AS rnum
-			FROM
-				(SELECT num,writer,title,viewCount,to_char(regdate, 'yyyy\"년\"mm\"월\"dd\"일\" hh24\"시\"mi\"분\"') as regdate
-				FROM board_cafe
-				WHERE #{}
-				ORDER BY num DESC) result1)
-		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+	<update id="addViewCount" parameterType="int">
+		UPDATE board_cafe
+		SET viewCount = viewCount + 1
+		WHERE num= #{num}
+	</update>
+	<select id="getData" parameterType="int" resultType="cafeDto">
+		SELECT * 
+		FROM board_cafe
+		WHERE num=#{num}
 	</select>
+	<insert id="insert" parameterType="cafeDto">
+		insert into board_cafe
+		(num, writer, title, content, viewCount, regdate)
+		values(board_cafe_seq.NEXTVAL, #{writer}, #{title}, #{content}, #{viewCount}, SYSDATE)
+	</insert>
+	<update id="update" parameterType="cafeDto">
+		update board_cafe
+		set title=#{title} ,writer=#{writer}
+		where num=#{num}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from board_cafe
+		where num=#{num}
+	</delete>
 </mapper>

@@ -13,8 +13,8 @@ public class CafeDaoImpl implements CafeDao{
 	@Autowired
 	private SqlSession session;
 	@Override
-	public int getCount() {
-		return session.selectOne("cafe.getCount");
+	public int getCount(CafeDto dto) {
+		return session.selectOne("cafe.getCount", dto);
 	}
 	@Override
 	public List<CafeDto> getList(CafeDto dto) {
@@ -24,5 +24,20 @@ public class CafeDaoImpl implements CafeDao{
 	@Override
 	public CafeDto getData(int num) {
 		return session.selectOne("cafe.getData", num);
+	}
+	@Override
+	public void addViewCount(int num) {
+		session.update("cafe.addViewCount", num);
+	}
+	@Override
+	public void insert(CafeDto dto) {
+		session.insert("cafe.insert", dto);
+	}
+	public void update(CafeDto dto) {
+		session.update("cafe.update", dto);
+	}
+	@Override
+	public void delete(int num) {
+		session.delete("cafe.delete", num);
 	}
 }

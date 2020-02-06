@@ -27,6 +27,17 @@
 		<li><a href="${pageContext.request.contextPath }/cafe/list.do">목록</a></li>
 	</ol>
 	<h1>글 목록 입니다.</h1>
+	<c:choose>
+		<c:when test="${not empty keyword }">
+			<p class="breadcrumb">
+				<strong>${keyword }</strong> 키워드로 검색된
+				<strong>${totalRow }</strong> 개의 파일이 있습니다.
+			</p>
+		</c:when>
+		<c:otherwise>
+			<p class="breadcrumb"><strong>${totalRow }</strong> 개의 파일이 있습니다.</p>
+		</c:otherwise>
+	</c:choose>
 	<table class="table table-hover table-condensed">
 		<colgroup>
 			<col class="col-xs-1"/>
@@ -75,13 +86,13 @@
 	<div class="page-display">
 		<ul class="pagination pagination-sm" id="ul">
 			<li>
-				<a href="list.do?pageNum=1">처음으로</a>
+				<a href="list.do?pageNum=1&condition=${condition}&keyword=${encodedKeyword}">처음으로</a>
 			</li>
 			
 			<c:choose>
 				<c:when test="${startPageNum ne 1 }">
 					<li>
-						<a href="list.do?pageNum=${startPageNum -1 }"><i class="fas fa-arrow-left"></i></a>
+						<a href="list.do?pageNum=${startPageNum -1 }&condition=${condition}&keyword=${encodedKeyword}"><i class="fas fa-arrow-left"></i></a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -95,12 +106,12 @@
 				<c:choose>
 					<c:when test="${i eq pageNum }">
 						<li class="active">
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${encodedKeyword}">${i }</a>
 						</li>			
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${encodedKeyword}">${i }</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -109,7 +120,7 @@
 			<c:choose>
 				<c:when test="${endPageNum lt totalPageCount }">
 					<li>
-						<a href="list.do?pageNum=${endPageNum + 1 }"><i class="fas fa-arrow-right"></i></a>
+						<a href="list.do?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedKeyword}"><i class="fas fa-arrow-right"></i></a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -119,12 +130,18 @@
 				</c:otherwise>
 			</c:choose>
 			<li>
-				<a href="list.do?pageNum=${totalPageCount }">끝으로</a>
+				<a href="list.do?pageNum=${totalPageCount }&condition=${condition}&keyword=${encodedKeyword}">끝으로</a>
 			</li>
 		</ul>	
-	<a class="btn btn-primary pull-right" href="private/insertform.do" id="a">새글 작성</a>
-	<form action="cafe/search.do" method="post">
-		<input type="text" name="search" />
+	<a class="btn btn-primary pull-right" href="insertform.do" id="a">새글 작성</a>
+	<form action="list.do" method="get">	<!-- get 방식이므로 /file/list.do?condition=xxx&keyword=xxx 와 같은 요청이 된다. -->
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="titlewriter" <c:if test="${condition eq 'titlewriter' }">selected</c:if> >제목+작성자</option> 
+			<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
+			<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
+		</select>
+		<input type="text" name="keyword" id="keyword" placeholder="검색어 ..." value="${keyword }"/>
 		<button type="submit">검색</button>
 	</form>
 	</div>

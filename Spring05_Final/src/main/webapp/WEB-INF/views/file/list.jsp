@@ -68,7 +68,7 @@
 	<div class="page-display">
 		<ul class="pagination pagination-sm" id="ul">
 			<li>
-				<a href="list.do?pageNum=1">처음으로</a>
+				<a href="list.do?pageNum=1&condition=${condition}&keyword=${encodedKeyword}">처음으로</a>
 			</li>
 			<c:choose>
 				<c:when test="${startPageNum ne 1 }">
@@ -109,7 +109,7 @@
 				</c:otherwise>
 			</c:choose>
 			<li>
-				<a href="list.do?pageNum=${totalPageCount }">끝으로</a>
+				<a href="list.do?pageNum=${totalPageCount }&condition=${condition}&keyword=${encodedKeyword}">끝으로</a>
 			</li>
 		</ul>	
 	<a class="btn btn-primary pull-right" href="${pageContext.request.contextPath }/file/upload_form.do" id="a">파일 업로드</a>

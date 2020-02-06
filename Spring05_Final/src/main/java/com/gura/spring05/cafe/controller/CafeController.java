@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.cafe.dto.CafeDto;
@@ -26,8 +28,42 @@ public class CafeController {
 	}
 	
 	@RequestMapping("/cafe/detail")
-	public ModelAndView detail(@ModelAttribute("dto") CafeDto dto, HttpServletRequest request, ModelAndView mView) {
-		
+	public ModelAndView detail(@RequestParam int num,@RequestParam int pageNum, ModelAndView mView) {
+		service.showDetail(num, pageNum, mView);
+		mView.setViewName("/cafe/detail");
 		return mView;
+	}
+	
+	@RequestMapping("/cafe/insertform")
+	public ModelAndView authInsertform(HttpServletRequest request) {
+		
+		return new ModelAndView("cafe/insertform");
+	}
+	
+	@RequestMapping(value = "/cafe/insert", method = RequestMethod.POST)
+	public ModelAndView authInsert(@ModelAttribute CafeDto dto, HttpServletRequest request ) {
+		service.addContent(dto, request);
+		
+		return new ModelAndView("redirect:/cafe/list.do");
+	}
+	
+	@RequestMapping("/cafe/updateform")
+	public ModelAndView authUpdateform(@RequestParam int num,@RequestParam int pageNum, HttpServletRequest request) {
+		service.showContent(num, pageNum, request);
+		
+		return new ModelAndView("cafe/updateform");
+	}
+	
+	@RequestMapping("/cafe/update")
+	public ModelAndView authUpdate(@RequestParam int num,@RequestParam int pageNum, @ModelAttribute CafeDto dto, HttpServletRequest request) {
+		service.updateContent(pageNum, dto, request);
+		
+		return new ModelAndView("redirect:/cafe/list.do");
+	}
+	
+	@RequestMapping("/cafe/delete")
+	public ModelAndView authDelete(@RequestParam int num, HttpServletRequest request) {
+		service.deleteContent(num);
+		return new ModelAndView("redirect:/cafe/list.do");
 	}
 }
