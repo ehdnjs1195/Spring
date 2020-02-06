@@ -137,7 +137,11 @@ public class CafeServiceImpl implements CafeService{
 	}
 	
 	@Override
-	public void deleteContent(int num) {
-		dao.delete(num);
+	public void deleteContent(int num, HttpServletRequest request) {
+		String id=(String)request.getSession().getAttribute("id");
+		CafeDto dto=dao.getData(num);
+		if(dto.getWriter().equals(id)) {
+			dao.delete(num);			
+		}
 	}
 }

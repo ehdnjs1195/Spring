@@ -12,5 +12,5 @@ public interface CafeService {
 	public void addContent(CafeDto dto, HttpServletRequest request);
 	public void showContent(int num, int pageNum, HttpServletRequest request);
 	public void updateContent(int pageNum, CafeDto dto, HttpServletRequest request);
-	public void deleteContent(int num);
+	public void deleteContent(int num, HttpServletRequest request);
 }

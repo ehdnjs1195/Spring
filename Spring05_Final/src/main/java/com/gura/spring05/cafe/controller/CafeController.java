@@ -58,12 +58,12 @@ public class CafeController {
 	public ModelAndView authUpdate(@RequestParam int num,@RequestParam int pageNum, @ModelAttribute CafeDto dto, HttpServletRequest request) {
 		service.updateContent(pageNum, dto, request);
 		
-		return new ModelAndView("redirect:/cafe/list.do");
+		return new ModelAndView("redirect:/cafe/detail.do?num="+num+"&pageNum="+pageNum);
 	}
 	
 	@RequestMapping("/cafe/delete")
 	public ModelAndView authDelete(@RequestParam int num, HttpServletRequest request) {
-		service.deleteContent(num);
+		service.deleteContent(num, request);
 		return new ModelAndView("redirect:/cafe/list.do");
 	}
 }

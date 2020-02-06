@@ -43,7 +43,7 @@
 		WHERE num= #{num}
 	</update>
 	<select id="getData" parameterType="int" resultType="cafeDto">
-		SELECT * 
+		SELECT num,writer,title,viewCount,content, to_char(regdate, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"') as regdate 
 		FROM board_cafe
 		WHERE num=#{num}
 	</select>
@@ -54,7 +54,7 @@
 	</insert>
 	<update id="update" parameterType="cafeDto">
 		update board_cafe
-		set title=#{title} ,writer=#{writer}
+		set title=#{title} ,content=#{content}
 		where num=#{num}
 	</update>
 	<delete id="delete" parameterType="int">
