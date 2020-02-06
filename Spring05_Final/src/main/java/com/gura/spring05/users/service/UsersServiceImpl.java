@@ -41,7 +41,7 @@ public class UsersServiceImpl implements UsersService{
 	}
 	
 	@Override
-	public void validUser(UsersDto dto, HttpSession session, ModelAndView mView) {
+	public void validUser(UsersDto dto, HttpSession session, ModelAndView mView, HttpServletRequest request) {
 		//아이디 비밀번호가 유효한지 여부
 		boolean isValid=false;
 		//아이디를 이용해서 저장된 비밀번호를 읽어온다.
@@ -55,7 +55,9 @@ public class UsersServiceImpl implements UsersService{
 			session.setAttribute("id", dto.getId());
 			String profile=dao.getProfile(dto.getId());
 			session.setAttribute("profile", profile);
-			System.out.println(dto.getId()+"|"+profile);
+			String ip=request.getRemoteAddr();
+			session.setAttribute("ip", ip);
+			System.out.println("접속 정보: "+dto.getId()+" | "+ip);
 		}
 	}
 	@Override

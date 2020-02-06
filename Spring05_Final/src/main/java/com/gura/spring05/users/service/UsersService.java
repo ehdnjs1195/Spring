@@ -14,7 +14,7 @@ public interface UsersService {
 
 	public Map<String, Object> isExistId(String inputId);		// Map에 데이터를 담아서 잘 응답하면 Json 으로 자동으로 바뀐다.  
 	public void addUser(UsersDto dto);
-	public void validUser(UsersDto dto, HttpSession session, ModelAndView mView);
+	public void validUser(UsersDto dto, HttpSession session, ModelAndView mView, HttpServletRequest request);
 	public void showInfo(String id, ModelAndView mView);
 	public String saveProfileImage(HttpServletRequest request, MultipartFile mFile);	
 	public void updatePassword(UsersDto dto, ModelAndView mView);
