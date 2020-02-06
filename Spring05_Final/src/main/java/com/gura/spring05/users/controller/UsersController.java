@@ -115,7 +115,7 @@ public class UsersController {
 		response.addCookie(idCook);
 		response.addCookie(pwdCook);	//response에 담아두면 view page로 넘어갈 때 같이 넘어간다.
 		
-		service.validUser(dto, request.getSession(), mView);	//request를 통해 session을 얻어낸다.
+		service.validUser(dto, request.getSession(), mView, request);	//request를 통해 session을 얻어낸다.
 		
 		mView.setViewName("users/login");	
 		return mView;
