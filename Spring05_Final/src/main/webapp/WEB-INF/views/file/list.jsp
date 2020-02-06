@@ -21,6 +21,17 @@
 </jsp:include>
 <div class="container">
 	<h1>파일 목록 입니다.</h1>
+	<c:choose>
+		<c:when test="${not empty keyword }">
+			<p class="breadcrumb">
+				<strong>${keyword }</strong> 키워드로 검색된
+				<strong>${totalRow }</strong> 개의 파일이 있습니다.
+			</p>
+		</c:when>
+		<c:otherwise>
+			<p class="breadcrumb"><strong>${totalRow }</strong> 개의 파일이 있습니다.</p>
+		</c:otherwise>
+	</c:choose>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -62,7 +73,7 @@
 			<c:choose>
 				<c:when test="${startPageNum ne 1 }">
 					<li>
-						<a href="list.do?pageNum=${startPageNum -1 }"><i class="fas fa-arrow-left"></i></a>
+						<a href="list.do?pageNum=${startPageNum -1 }&condition=${condition}&keyword=${encodedKeyword}"><i class="fas fa-arrow-left"></i></a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -75,12 +86,12 @@
 				<c:choose>
 					<c:when test="${pageNum eq i }">
 						<li class="active">
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${encodedKeyword}">${i }</a>
 						</li>	
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="list.do?pageNum=${i }">${i }</a>
+							<a href="list.do?pageNum=${i }&condition=${condition}&keyword=${encodedKeyword}">${i }</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -88,7 +99,7 @@
 			<c:choose>
 				<c:when test="${endPageNum < totalPageCount }">
 					<li>
-						<a href="list.do?pageNum=${endPageNum + 1 }"><i class="fas fa-arrow-right"></i></a>
+						<a href="list.do?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedKeyword}"><i class="fas fa-arrow-right"></i></a>
 					</li>
 				</c:when>
 				<c:otherwise>
@@ -103,7 +114,17 @@
 		</ul>	
 	<a class="btn btn-primary pull-right" href="${pageContext.request.contextPath }/file/upload_form.do" id="a">파일 업로드</a>
 	</div>
-</div>
+	<form action="list.do" method="get">	<!-- get 방식이므로 /file/list.do?condition=xxx&keyword=xxx 와 같은 요청이 된다. -->
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="titlename">제목+파일명</option>
+			<option value="title">제목</option>
+			<option value="writer">작성자</option>
+		</select>
+		<input type="text" name="keyword" id="keyword" placeholder="검색어 ..."/>
+		<button type="submit">검색</button>
+	</form>
+</div><!-- /.container -->
 <script>
 	//삭제 여부를 확인하고 삭제를 진행하는 javascript 함수
 	function deleteConfirm(num){

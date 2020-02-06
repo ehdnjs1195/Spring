@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">	
-	<select id="getCount" resultType="int">	<!-- 전체 글의 개수 리턴 -->
+	<select id="getCount" parameterType="FileDto" resultType="int">	<!-- 전체 글의 개수 리턴 -->
 		SELECT NVL(MAX(ROWNUM), 0) <!-- 테이블이 아무것도 없으면 rownum은 null이 되기 때문에 파싱이 되지 않아서 exception이 발생하게 된다! 따라서 nvl로 null이면 0을 넣어준다. -->
 		FROM board_file
+		<choose>	<!-- 아래와 조건은 같다. -->
+			<when test="title != null and orgFileName != null">
+				WHERE title LIKE '%${title }%' OR orgFileName LIKE '%${orgFileName}%'
+			</when>		
+			<when test="title != null">
+				WHERE title LIKE '%${title }%'
+			</when>
+			<when test="writer != null">
+				WHERE writer LIKE '%${writer }%'
+			</when>
+		</choose>
 	</select>
 	<select id="getList" parameterType="fileDto" resultType="fileDto">
 		SELECT *
@@ -12,6 +23,18 @@
 			FROM
 				(SELECT num, writer, title, orgFileName, fileSize, downCount, regdate
 				FROM board_file
+				<choose>
+					<when test="title != null and orgFileName != null">
+						WHERE title LIKE '%${title }%' OR orgFileName LIKE '%${orgFileName}%'
+					</when>		<!-- 오라클에서 연결 연산자는 || 이것이므로  => '%'|| #{xxx} ||'%'  이런식으로 작성이 되어야 한다. 그리고 #{hello} 는 pstmt.setString(1, "hello") 이런식의 구조라고 봐야한다.(setter로 바인딩하는 구조) -->
+								<!-- ${ } 는 바인딩을 하는 개념이 아니다. 미리 결과를 넣어놓고 쓰는 개념이기 때문에 ${hello} 는 바로 'hello' 라고 생각하면 된다. 따라서 '%${xxx}%' 라고 사용할 수 있다. 결과는 같다. -->
+					<when test="title != null">
+						WHERE title LIKE '%${title }%'
+					</when>
+					<when test="writer != null">
+						WHERE writer LIKE '%${writer }%'
+					</when>
+				</choose>
 				ORDER BY num DESC) result1)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
