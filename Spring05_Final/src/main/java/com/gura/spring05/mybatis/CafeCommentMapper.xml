@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafeComment">
+	<select id="getList" parameterType="int" resultType="cafeCommentDto">
+		SELECT num, writer, content, target_id, ref_group, comment_group, deleted, board_cafe_comment.regdate, profile 	<!-- 조인을 해주기 때문에 regdate는 어디에서 가져올지 명시해준다. -->
+		FROM board_cafe_comment
+		INNER JOIN users
+		ON board_cafe_comment.writer = users.id 	<!-- profile 사진 경로를 가져오기 위해서 join을 해준다. -->
+		WHERE ref_group=#{ref_group}
+	</select>
+	<update id="delete" parameterType="int">
+		UPDATE board_cafe_comment
+		SET deleted='yes'
+		WHERE num=#{num}
+	</update>
+	<insert id="insert" parameterType="cafeCommentDto">
+		INSERT INTO board_cafe_comment
+		(num, writer, content, target_id, ref_group, comment_group, regdate)
+		VALUES(#{num}, #{writer}, #{content}, #{target_id}, #{ref_group}, #{comment_group}, SYSDATE)
+	</insert>
+	<select id="getSequence" resultType="int">
+		SELECT board_cafe_comment_seq.NEXTVAL
+		FROM DUAL <!-- 더미테이블 dual -->
+	</select>
+	<update id="update" parameterType="cafeCommentDto">
+		UPDATE board_cafe_comment
+		SET content = #{content}
+		WHERE  num = #{num}
+	</update>
+</mapper>
