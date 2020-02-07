@@ -5,8 +5,8 @@
 		SELECT NVL(MAX(ROWNUM), 0)
 		FROM board_cafe
 		<choose>	<!-- 아래와 조건은 같다. -->
-			<when test="title != null and writer != null">
-				WHERE title LIKE '%${title }%' OR writer LIKE '%${writer}%'
+			<when test="title != null and content != null">
+				WHERE title LIKE '%${title }%' OR content LIKE '%${content}%'
 			</when>		
 			<when test="title != null">
 				WHERE title LIKE '%${title }%'
@@ -24,8 +24,8 @@
 				(SELECT num,writer,title,viewCount,to_char(regdate, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"') as regdate
 				FROM board_cafe
 				<choose>	<!-- 아래와 조건은 같다. -->
-					<when test="title != null and writer != null">
-						WHERE title LIKE '%${title }%' OR writer LIKE '%${writer}%'
+					<when test="title != null and content != null">
+						WHERE title LIKE '%${title }%' OR content LIKE '%${content}%'
 					</when>		
 					<when test="title != null">
 						WHERE title LIKE '%${title }%'

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring05.cafe.dao.CafeDao;
 import com.gura.spring05.cafe.dto.CafeDto;
+import com.gura.spring05.exception.CanNotDeleteException;
 import com.gura.spring05.file.dto.FileDto;
 
 @Repository
@@ -27,9 +28,9 @@ public class CafeServiceImpl implements CafeService{
 		//검색 키워드가 존재한다면 키워드를 담을 FileDto 객체 생성 
 		CafeDto dto=new CafeDto();
 		if(keyword != null) {//검색 키워드가 전달된 경우
-			if(condition.equals("titlewriter")) {//제목+작성자명 검색
+			if(condition.equals("titlecontent")) {//제목+작성자명 검색
 				dto.setTitle(keyword);
-				dto.setWriter(keyword);
+				dto.setContent(keyword);
 			}else if(condition.equals("title")) {//제목 검색
 				dto.setTitle(keyword);
 			}else if(condition.equals("writer")) {//작성자 검색
@@ -140,8 +141,9 @@ public class CafeServiceImpl implements CafeService{
 	public void deleteContent(int num, HttpServletRequest request) {
 		String id=(String)request.getSession().getAttribute("id");
 		CafeDto dto=dao.getData(num);
-		if(dto.getWriter().equals(id)) {
-			dao.delete(num);			
+		if(!dto.getWriter().equals(id)) {
+			throw new CanNotDeleteException();
 		}
+		dao.delete(num);			
 	}
 }

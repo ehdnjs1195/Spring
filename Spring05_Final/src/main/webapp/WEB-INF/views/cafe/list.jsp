@@ -137,7 +137,7 @@
 	<form action="list.do" method="get">	<!-- get 방식이므로 /file/list.do?condition=xxx&keyword=xxx 와 같은 요청이 된다. -->
 		<label for="condition">검색조건</label>
 		<select name="condition" id="condition">
-			<option value="titlewriter" <c:if test="${condition eq 'titlewriter' }">selected</c:if> >제목+작성자</option> 
+			<option value="titlecontent" <c:if test="${condition eq 'titlecontent' }">selected</c:if> >제목+내용</option> 
 			<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
 			<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
 		</select>
