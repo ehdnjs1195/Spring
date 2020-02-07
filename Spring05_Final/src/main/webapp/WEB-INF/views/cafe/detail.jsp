@@ -19,7 +19,11 @@
 	}
 
 
-
+	/* 글 내용을 출력할 div 에 적용할 css */
+	.contents, table{
+		width: 100%;
+		border: 1px dotted #cecece;
+		box-shadow: 3px 3px 5px 6px #ccc;
 	}
 	/* 댓글에 관련된 css */
 	.comments ul{
@@ -182,7 +186,7 @@
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		</ul>
+	</ul>
 		<div class="clearfix"></div>
 		<!-- 원글에 댓글을 작성할 수 있는 폼 -->
 		<div class="comment_form">
