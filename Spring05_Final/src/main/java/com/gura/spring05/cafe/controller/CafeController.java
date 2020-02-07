@@ -66,4 +66,11 @@ public class CafeController {
 		service.deleteContent(num, request);
 		return new ModelAndView("redirect:/cafe/list.do");
 	}
+	
+	//댓글 저장 요청 처리
+	@RequestMapping(value = "/cafe/comment_insert", method = RequestMethod.POST)
+	public ModelAndView authCommentInsert(HttpServletRequest request, @RequestParam int ref_group,@RequestParam int pageNum) {
+		service.saveComment(request);
+		return new ModelAndView("redirect:/cafe/detail.do?num="+ref_group+"&pageNum="+pageNum);
+	}
 }

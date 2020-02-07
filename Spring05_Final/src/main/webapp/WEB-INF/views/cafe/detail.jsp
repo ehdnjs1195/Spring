@@ -17,6 +17,58 @@
 	#comment_table{
 		margin-top:60px;
 	}
+
+
+
+	}
+	/* 댓글에 관련된 css */
+	.comments ul{
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+	}
+	.comments ul li{
+		border-top: 1px solid #888; /* li 의 윗쪽 경계선 */
+	}
+	.comments dt{
+		margin-top: 5px;
+	}
+	.comments dd{
+		margin-left: 26px;
+	}
+	.comments form textarea, .comments form button{
+		float: left;
+	}
+	.comments li{
+		clear: left;
+	}
+	.comments form textarea{
+		width: 85%;
+		height: 100px;
+	}
+	.comments form button{
+		width: 15%;
+		height: 100px;
+	}
+	/* 댓글에 댓글을 다는 폼과 수정폼을 일단 숨긴다. */
+	.comment form{
+		display: none;
+	}
+	.comment{
+		position: relative;
+	}
+	.comment .reply_icon{
+		width: 8px;
+		height: 8px;
+		position: absolute;
+		top: 10px;
+		left: 30px;
+	}
+	.comments .user-img{
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+	}
 </style>
 </head>
 <body>
@@ -63,44 +115,20 @@
 		</c:if>
 	</div>
 	
-	<div id="comment_table">
-		<table class="table table-bordered table-condensed">
-			<colgroup>
-				<col class="col-xs-1"/>
-				<col class="col-xs-1"/>
-				<col class="col-xs-8"/>
-				<col class="col-xs-2"/>
-			</colgroup>
-			<thead>
-				<tr>
-					<th style="text-align:center;">번호</th>
-					<th style="text-align:center;">작성자</th>
-					<th style="text-align:center;">댓글</th>
-					<th style="text-align:center;">작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="tmp" items="${list }" varStatus="status">
-					<c:if test="${tmp.writeNum eq num }">
-						<tr>
-							<td style="text-align:center;">${tmp.rnum }</td>
-							<td>${tmp.writer }</td>
-							<td>${tmp.content }</td>
-							<td style="font-size: 12px; text-align:center;">${tmp.regdate }</td>
-						</tr>				
-					</c:if>
-				</c:forEach>
-			</tbody>
-		</table>
-		<form action="${pageContext.request.contextPath }/cafe/private/comment_insert.do">
-			<input type="hidden" name="writeNum" value="${dto.num }" />
-			<input type="hidden" name="writer" value="${id }" />
-			<input type="hidden" name="ip" value="${ip }" />
-			<input type="hidden" name="num" value="${num }" />
-			<input type="hidden" name="pageNum" value="${pageNum }" />
-			<textarea name="content" id="content" cols="90" rows="2" placeholder="댓글입력.."></textarea>
-			<button type="submit">등록</button>
-		</form>
+	<div class="comments">
+		<!-- 원글에 댓글을 작성할 수 있는 폼 -->
+		<div class="comment_form">
+			<form action="comment_insert.do" method="post">
+				<!-- 댓글의 그룹번호는 원글의 글번호가 된다. -->
+				<input type="hidden" name="pageNum" value="${pageNum }" />
+				<input type="hidden" name="ref_group" value="${dto.num }" />
+				<!-- 댓글의 대상자는 원들의 작성자가 된다. -->
+				<input type="hidden" name="target_id" value="${dto.writer }" />
+				<textarea name="content"><c:if test="${empty id }">로그인이 필요합니다.</c:if></textarea> 
+				<button type="submit">등록</button>
+			</form>
+		</div>
+	</div>
 	</div>
 </div>
 <script>

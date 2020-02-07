@@ -13,4 +13,6 @@ public interface CafeService {
 	public void showContent(int num, int pageNum, HttpServletRequest request);
 	public void updateContent(int pageNum, CafeDto dto, HttpServletRequest request);
 	public void deleteContent(int num, HttpServletRequest request);
+	//댓글 저장하는 메소드
+	public void saveComment(HttpServletRequest request);
 }
