@@ -28,8 +28,8 @@ public class CafeController {
 	}
 	
 	@RequestMapping("/cafe/detail")
-	public ModelAndView detail(@RequestParam int num,@RequestParam int pageNum, ModelAndView mView) {
-		service.showDetail(num, pageNum, mView);
+	public ModelAndView detail(@RequestParam int num,@RequestParam int pageNum, ModelAndView mView, HttpServletRequest request) {
+		service.showDetail(num, pageNum, mView, request);
 		mView.setViewName("/cafe/detail");
 		return mView;
 	}

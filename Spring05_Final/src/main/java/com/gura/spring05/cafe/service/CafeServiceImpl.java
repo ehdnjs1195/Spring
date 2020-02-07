@@ -105,7 +105,7 @@ public class CafeServiceImpl implements CafeService{
 	}
 	
 	@Override
-	public void showDetail(int num, int pageNum, ModelAndView mView) {
+	public void showDetail(int num, int pageNum, ModelAndView mView, HttpServletRequest request) {
 		
 		//2. DB 에서 해당 글 정보를 얻어온다.
 		CafeDto dto=dao.getData(num);
@@ -115,6 +115,10 @@ public class CafeServiceImpl implements CafeService{
 		mView.addObject("pageNum", pageNum);
 		mView.addObject("dto", dto);
 		mView.addObject("num", num);	
+		
+		//댓글 목록을 얻어와서 request 에 담아준다.
+		List<CafeCommentDto> commentList=cafeCommentDao.getList(num);
+		request.setAttribute("commentList", commentList);
 	}
 	@Override
 	public void addContent(CafeDto dto, HttpServletRequest request) {
