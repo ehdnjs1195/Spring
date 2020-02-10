@@ -207,9 +207,9 @@
 //댓글 수정 링크를 눌렀을때 호출되는 함수 등록
 $(".comment-update-link").click(function(){
 	$(this)
-	.parent().parent().parent()
-	.find(".comment-update-form")
-	.slideToggle(200);
+	.parent().parent().parent() 	//세칸 올라가서 하위에 class="comment-update-form" 을 찾는다.
+ 	.find(".comment-update-form")	
+	.slideToggle(200);				
 });
 
 //댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
@@ -245,13 +245,14 @@ $(".comment-update-form").on("submit", function(){
 function deleteComment(num){
 	var isDelete=confirm("확인을 누르면 댓글이 삭제 됩니다.");
 	if(isDelete){
+		//페이지 전환 없이 ajax 요청을 통해서 삭제하기
 		$.ajax({
-			url:"comment_delete.do",
+			url:"comment_delete.do",	// 상대경로 =>/cafe/comment_delete.do로 요청됨.
 			method:"post",
-			data:{"num":num},
+			data:{"num":num},	// num 이라는 파라미터명으로 삭제할 댓글의 번호 전송
 			success:function(responseData){
 				if(responseData.isSuccess){
-					var sel="#comment"+num;
+					var sel="#comment"+num;	//아이디가 comment##인 것에 삭제 멘트 출력하기.
 					$(sel).text("삭제된 댓글 입니다.");
 				}
 			}
@@ -274,7 +275,7 @@ $(".comments form").on("submit", function(){
 $(".comment .reply_link").click(function(){
 	$(this)
 	.parent().parent().parent()
-	.find(".comment-insert-form")
+	.find(".comment-insert-form")	//부모요소(dt), 부모요소(dl), 부모요소(li) 를 찾아올라가서 자손 요소로 class="comment-insert-form" 을 찾는다.
 	.slideToggle(200);
 	
 	// 답글 <=> 취소가 서로 토글 되도록 한다. 
