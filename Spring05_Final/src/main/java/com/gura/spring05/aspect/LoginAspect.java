@@ -1,6 +1,7 @@
 package com.gura.spring05.aspect;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class LoginAspect {
 
-	@Around("execution(org.springframework.web.servlet.ModelAndView auth*(..))")		//ModelAndView 리턴타입, auth로 시작하는 메서드, 인자는 상관 없음
+	@Around("execution(org.springframework.web.servlet.ModelAndView auth*(..))")		//ModelAndView 리턴타입, auth로 시작하는  모든 메서드, 인자는 상관 없음
 	public Object loginCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		//aop 가 적용된 메소드에 전달된 값을 Object[] 로 얻어오기
 		Object[] args=joinPoint.getArgs();
@@ -72,4 +73,39 @@ public class LoginAspect {
 		return mView;
 	}
 	
+	@Around("execution(java.util.Map auth*(..))")		//Map 리턴타입, auth로 시작하는 모든 메서드, 인자는 상관 없음
+	public Object loginCheckAjax(ProceedingJoinPoint joinPoint) throws Throwable {
+		//aop 가 적용된 메소드에 전달된 값을 Object[] 로 얻어오기
+		Object[] args=joinPoint.getArgs();
+		for(Object tmp:args) {
+			System.out.println(tmp);
+		}
+		//로그인 여부
+		boolean isLogin=false;
+		HttpServletRequest request=null;
+		for(Object tmp:args) {
+			//인자로 전달된 값중에 HttpServletRequest type 을 찾아서		=> auth* 메서드에서 인자로 HttpServletRequest type을 갖고 있어야 한다.
+			if(tmp instanceof HttpServletRequest) {
+				//원래 type 으로 casting
+				request=(HttpServletRequest)tmp;
+				//HttpSession 객체 얻어내기 
+				HttpSession session=request.getSession();
+				//세션에 "id" 라는 키값으로 저장된게 있는지 확인(로그인 여부)
+				if(session.getAttribute("id") != null) {
+					isLogin=true;
+				}
+			}
+		}
+		//로그인 했는지 여부
+		if(isLogin){
+			// aop 가 적용된 메소드를 실행하고 
+			Object obj=joinPoint.proceed();		//proceed() 하면 authInfo() 메서드가 호출된다. 즉, 로그인 되어있는 상태일 때만. 
+			// 리턴되는 값을 리턴해 주기 
+			return obj;
+		}
+		//로그인을 하지 않았으면
+		Map<String, Object> map=new HashMap<>();
+		map.put("isSuccess", false);
+		return map;	//	{"isSuccess" : false} 의 문자열이 응답된다.
+	}
 }
