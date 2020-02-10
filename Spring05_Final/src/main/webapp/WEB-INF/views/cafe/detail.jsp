@@ -204,87 +204,99 @@
 </div>
 
 <script>
-//댓글 수정 링크를 눌렀을때 호출되는 함수 등록
-$(".comment-update-link").click(function(){
-	$(this)
-	.parent().parent().parent() 	//세칸 올라가서 하위에 class="comment-update-form" 을 찾는다.
- 	.find(".comment-update-form")	
-	.slideToggle(200);				
-});
-
-//댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
-$(".comment-update-form").on("submit", function(){
-	// "comment_update.do"
-	var url=$(this).attr("action");	// form에 action 속성을 읽어온다.
-	//폼에 작성된 내용을 query 문자열로 읽어온다.
-	// num=댓글번호&content=댓글내용
-	var data=$(this).serialize();	//넘길 data를 (num=xx&content=xx) 읽어온다.
-	//이벤트가 일어난 폼을 선택해서 변수에 담아 놓는다.
-	var $this=$(this);
-	$.ajax({
-		url:url,
-		method:"post",
-		data:data,
-		success:function(responseData){
-			// responseData : {isSuccess:true}
-			if(responseData.isSuccess){
-				//폼을 안보이게 한다 
-				$this.slideUp(200);
-				//폼에 입력한 내용 읽어오기
-				var content=$this.find("textarea").val();
-				//pre 요소에 수정 반영하기 
-				$this.parent().find("pre").text(content);
-			}
-		}
+	//댓글 수정 링크를 눌렀을때 호출되는 함수 등록
+	$(".comment-update-link").click(function(){
+		$(this)
+		.parent().parent().parent() 	//세칸 올라가서 하위에 class="comment-update-form" 을 찾는다.
+	 	.find(".comment-update-form")	
+		.slideToggle(200);				
 	});
-	//폼 제출 막기 
-	return false;
-});
-
-//댓글 삭제를 눌렀을때 호출되는 함수
-function deleteComment(num){
-	var isDelete=confirm("확인을 누르면 댓글이 삭제 됩니다.");
-	if(isDelete){
-		//페이지 전환 없이 ajax 요청을 통해서 삭제하기
+	
+	//댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
+	$(".comment-update-form").on("submit", function(){
+		// "comment_update.do"
+		var url=$(this).attr("action");	// form에 action 속성을 읽어온다.
+		//폼에 작성된 내용을 query 문자열로 읽어온다.
+		// num=댓글번호&content=댓글내용
+		var data=$(this).serialize();	//넘길 data를 (num=xx&content=xx) 읽어온다.
+		//이벤트가 일어난 폼을 선택해서 변수에 담아 놓는다.
+		var $this=$(this);
 		$.ajax({
-			url:"comment_delete.do",	// 상대경로 =>/cafe/comment_delete.do로 요청됨.
+			url:url,
 			method:"post",
-			data:{"num":num},	// num 이라는 파라미터명으로 삭제할 댓글의 번호 전송
+			data:data,
 			success:function(responseData){
+				// responseData : {isSuccess:true}
 				if(responseData.isSuccess){
-					var sel="#comment"+num;	//아이디가 comment##인 것에 삭제 멘트 출력하기.
-					$(sel).text("삭제된 댓글 입니다.");
+					//폼을 안보이게 한다 
+					$this.slideUp(200);
+					//폼에 입력한 내용 읽어오기
+					var content=$this.find("textarea").val();
+					//pre 요소에 수정 반영하기 
+					$this.parent().find("pre").text(content);
 				}
 			}
 		});
-	}
-}
-
-//폼에 submit 이벤트가 일어 났을때 실행할 함수 등록 
-$(".comments form").on("submit", function(){
-	//로그인 여부
-	var isLogin=${not empty id};
-	if(isLogin==false){
-		alert("로그인 페이지로 이동 합니다.");
-		location.href="${pageContext.request.contextPath}/users/loginform.do?url=${pageContext.request.contextPath}/cafe/detail.do?num=${dto.num}";
-		return false;//폼 전송 막기 
-	}
-});
-
-//답글 달기 링크를 클릭했을때 실행할 함수 등록
-$(".comment .reply_link").click(function(){
-	$(this)
-	.parent().parent().parent()
-	.find(".comment-insert-form")	//부모요소(dt), 부모요소(dl), 부모요소(li) 를 찾아올라가서 자손 요소로 class="comment-insert-form" 을 찾는다.
-	.slideToggle(200);
+		//폼 제출 막기 
+		return false;
+	});
 	
-	// 답글 <=> 취소가 서로 토글 되도록 한다. 
-	if($(this).text()=="답글"){
-		$(this).text("취소");
-	}else{
-		$(this).text("답글");
+	//댓글 삭제를 눌렀을때 호출되는 함수
+	function deleteComment(num){
+		var isDelete=confirm("확인을 누르면 댓글이 삭제 됩니다.");
+		if(isDelete){
+			//페이지 전환 없이 ajax 요청을 통해서 삭제하기
+			$.ajax({
+				url:"comment_delete.do",	// 상대경로 =>/cafe/comment_delete.do로 요청됨.
+				method:"post",
+				data:{"num":num},	// num 이라는 파라미터명으로 삭제할 댓글의 번호 전송
+				success:function(responseData){
+					if(responseData.isSuccess){
+						var sel="#comment"+num;	//아이디가 comment##인 것에 삭제 멘트 출력하기.
+						$(sel).text("삭제된 댓글 입니다.");
+					}
+				}
+			});
+		}
 	}
-});
+	
+	//폼에 submit 이벤트가 일어 났을때 실행할 함수 등록 
+	$(".comments form").on("submit", function(){
+		//로그인 여부
+		var isLogin=${not empty id};
+		if(isLogin==false){
+			alert("로그인 페이지로 이동 합니다.");
+			location.href="${pageContext.request.contextPath}/users/loginform.do?url=${pageContext.request.contextPath}/cafe/detail.do?num=${dto.num}";
+			return false;//폼 전송 막기 
+		}
+	});
+	//폼에 focus 이벤트가 일어 났을때 실행할 함수 등록 
+	$(".comments form textarea").on("click", function(){
+		//로그인 여부
+		var isLogin=${not empty id};
+		if(isLogin==false){
+			var isMove=confirm("로그인 하러 갈텨?");
+			if(isMove){
+				location.href="${pageContext.request.contextPath}/users/loginform.do?url=${pageContext.request.contextPath}/cafe/detail.do?num=${dto.num}";
+			}
+		}
+	});
+	
+	//답글 달기 링크를 클릭했을때 실행할 함수 등록
+	$(".comment .reply_link").click(function(){
+		$(this)
+		.parent().parent().parent()
+		.find(".comment-insert-form")	//부모요소(dt), 부모요소(dl), 부모요소(li) 를 찾아올라가서 자손 요소로 class="comment-insert-form" 을 찾는다.
+		.slideToggle(200);
+		
+		// 답글 <=> 취소가 서로 토글 되도록 한다. 
+		if($(this).text()=="답글"){
+			$(this).text("취소");
+		}else{
+			$(this).text("답글");
+		}
+	});
+	
 	function deleteConfirm(){
 		var isDelete=confirm("글을 삭제 하시겠습니까?");
 		if(isDelete){
