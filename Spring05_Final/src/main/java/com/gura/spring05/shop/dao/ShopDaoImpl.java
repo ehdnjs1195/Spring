@@ -17,7 +17,7 @@ public class ShopDaoImpl implements ShopDao{
 	@Override
 	public List<ShopDto> getList() {
 		
-		return null;
+		return session.selectList("shop.getList");
 	}
 
 	@Override
