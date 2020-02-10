@@ -96,7 +96,7 @@ label{
 		<input type="hidden" name="url" value="${url }" />
 		<input type="text" name="id" placeholder="Username" value="${savedId }"/>
 		<input type="password" name="pwd" placeholder="Password" value="${savedPwd }"/>
-		<label><input type="checkbox" name="isSave" id="yes" /> Save ID, Password</label> 
+		<label><input type="checkbox" name="isSave" <c:if test="${not empty savedId }">checked</c:if> /> Save ID, Password</label> 
 		<input type="submit" name="" value="Login"/>
 </form>
 </body>
