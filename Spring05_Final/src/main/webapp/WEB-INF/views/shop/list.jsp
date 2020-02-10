@@ -24,7 +24,7 @@
 					<div class="panel-body">
 						<img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath }/resources/images/image1.png" />
 						<p>가격: <strong>${tmp.price }</strong></p>
-						<p>남은 수량: <strong>${tmp.remainCount }</strong></p>
+						<p> <c:if test="${tmp.remainCount le 5 }">(매진 임박) </c:if>남은 수량: <strong>${tmp.remainCount }</strong></p>
 					</div>
 					<div class="panel-footer">
 						<a class="btn btn-success" href="buy.do?num=${tmp.num }">구매하기</a>

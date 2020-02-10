@@ -12,6 +12,7 @@ public class OrderDaoImpl implements OrderDao{
 	
 	@Override
 	public void addOrder(OrderDto dto) {
-		
+		//주문 테이블에 주문 추가
+		session.insert("shop.addOrder", dto);
 	}
 }
