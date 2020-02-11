@@ -98,6 +98,11 @@
 		<!-- 0 순위로 찾아가도록 하고 없으면 자동으로  views 폴더 안에서 jsp 페이지를 찾는다. -->
 		<beans:property name="order" value="0"/>	<!-- setter method 임. setOrder(0)-->
 	</beans:bean>
+	
+	<!-- web.xml 에서 설정된 error 관련된 요청 처리 -->
+	<view-controller path="/error/404.do" view-name="error/404"/>	<!-- 직접 컨트롤러를 만들 수 있다. -->
+	<view-controller path="/error/500.do" view-name="error/500"/>
+					<!-- /WEB-INF/views/error/500.jsp 로 포워드 해서 응답을 하겠다. -->
 </beans:beans>
 
 <!-- 서버가 시작되면 여기있는 내용을 읽고 준비를 한다. Spring04나 Spring01의 init.xml 과 비슷하다고 생각 하면 된다. -->

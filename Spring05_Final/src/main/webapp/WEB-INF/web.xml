@@ -51,4 +51,18 @@
 		<filter-name>EncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>		<!-- 모든 요청에 대해서 필터링! -->
 	</filter-mapping>	
+	
+	<!-- 
+		404, 500 에러 페이지 
+		servlet-context.xml 에서 직접 컨트롤러를 설정해서 요청처리를 하게 할 수 있다.
+	-->
+	<error-page>
+		<error-code>404</error-code>	<!-- 이런 에러가 발생하면  -->
+		<location>/error/404.do</location> <!-- 여기로 포워드 이동될 수 있도록 -->
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.do</location>
+	</error-page>
+	
 </web-app>
