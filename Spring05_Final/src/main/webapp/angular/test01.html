@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>webapp/angular/test01.html</title>	<!-- 정적인 html은 webapp 하위에 폴더를 만들어야 한다. jsp는 동적인 파일이기 때문에 views 폴더 안에 생성한다.webapp에 만드는 것은 그냥 run해서 열 수 있다!!  -->
+<!-- angularjs 로딩하기 -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+</head>
+<!-- body 안에서 일어나는 일은 default 컨트롤러로 처리 하겠다는 의미 -->
+<body ng-app>
+<div class="container">
+	<!-- ng-xxx 는 디렉티브라고 한다. -->
+	<h1>ng-show ng-hide directive</h1>	<!-- show는 보여줄지의 여부, hide 는 숨길지의 여부 -->
+	<img src="../resources/images/kim1.png" ng-show="true" />
+	<img src="../resources/images/rabbit_1.png" ng-hide="true" />
+	<br/>
+	<label>
+		<!-- checkbox 의 체크 여부를 isChecked 라는 모델명으로 관리하기(boolean type이다.) -->
+		<input type="checkbox" ng-model="isChecked" /> 보이게 할지 여부
+	</label>
+	<br />
+	<img src="../resources/images/image1.png" ng-show="isChecked" />
+	<br />
+	<!-- input 요소에 입력한 문자열을 msg 라는 모델명으로 관리하기 -->
+	<input type="text" ng-model="msg" placeholder="문자열 입력.."/>
+	<!-- msg 라는 모델안에 들어있는 문자열을 출력하기 -->
+	<p>{{msg}}</p>	<!-- 의미해석: model에 일어난 변경사항(텍스트입력)이 바로 view에 반영된다 (바인딩)-->
+	<p ng-bind="msg"></p>	<!-- Model=>View,  View=>Model  양방향 (MVVM)패턴 -->
+	
+</div>
+</body>
+</html>
+	

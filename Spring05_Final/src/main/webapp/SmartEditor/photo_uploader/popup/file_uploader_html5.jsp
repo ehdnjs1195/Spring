@@ -16,7 +16,7 @@
     filename_ext = filename_ext.toLowerCase();
  
     //이미지 검증 배열변수
-    String[] allow_file = { "jpg", "png", "bmp", "gif" };
+    String[] allow_file = { "jpg", "png", "bmp", "gif", "jpeg" };
  
     //돌리면서 확장자가 이미지인지 
     int cnt = 0;

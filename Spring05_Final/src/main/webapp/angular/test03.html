@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>webapp/angular/test03.html</title>
+<link rel="stylesheet" href="../resources/css/bootstrap.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+</head>
+<body ng-app>
+<div class="container">
+	<h3>form validation</h3>
+	<form action="signup" name="myForm">
+		<div class="form-group has-feedback" ng-class="{'has-success':myForm.id.$valid, 'has-error':myForm.id.$invalid && myForm.id.$dirty}">	<!-- dirty를 써주어서 처음부터 error를 방지 -->
+			<label for="id" class="control-label">아이디</label>
+			<input ng-model="id" ng-required="true" type="text" class="form-control" name="id" id="id"/>	<!-- ng-required => 반드시 입력해야 하는 필드! 입력하지 않으면 false => $valid에서 true or false로 출력 가능-->
+			<p class="help-block" ng-show="myForm.id.$invalid && myForm.id.$dirty">반드시 입력 하세요</p>	<!-- dirty를 써주어서 처음부터 error를 방지 -->
+			<span  ng-show="myForm.id.$invalid && myForm.id.$dirty" class="glyphicon glyphicon-remove form-control-feedback"></span>
+			<span  ng-show="myForm.id.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+		</div>
+		
+		<div class="form-group has-feedback" ng-class="{'has-success':myForm.pwd.$valid, 'has-error':myForm.pwd.$invalid && myForm.pwd.$dirty}">
+			<label for="pwd" class="control-label">비밀번호</label>
+			<input ng-model="pwd" ng-required="true" type="text" class="form-control" name="pwd" id="pwd"/>	
+			<p class="help-block" ng-show="myForm.pwd.$invalid && myForm.pwd.$dirty">반드시 입력 하세요</p>
+			<span  ng-show="myForm.pwd.$invalid && myForm.pwd.$dirty" class="glyphicon glyphicon-remove form-control-feedback"></span>
+			<span  class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok':myForm.pwd.$valid}"></span>
+		</div>
+		<button ng-disabled="myForm.$invalid" type="submit" class="btn btn-primary">가입</button>
+	</form>			<!-- 이게 true or false 로 버튼의 동작을 제어한다.-->
+	<p>myForm.id.$valid = <strong style="color: blue;">{{myForm.id.$valid}}</strong></p>
+	<p>myForm.id.$invalid = <strong style="color: red;">{{myForm.id.$invalid}}</strong></p>
+	<p>myForm.id.$pristine = <strong >{{myForm.id.$pristine}}</strong></p>	<!-- pristine 처음에 새 것과 같은지. 입력하지 않으면 true (오염되지 않은.) -->
+	<p>myForm.id.$dirty = <strong >{{myForm.id.$dirty}}</strong></p>		<!-- dirty 입력 되었다면 true -->
+	<br />
+	<p>myForm.pwd.$valid = <strong style="color: blue;">{{myForm.pwd.$valid}}</strong></p>
+	<p>myForm.pwd.$invalid = <strong style="color: red;">{{myForm.pwd.$invalid}}</strong></p>
+	<p>myForm.pwd.$pristine = <strong >{{myForm.pwd.$pristine}}</strong></p>
+	<p>myForm.pwd.$dirty = <strong >{{myForm.pwd.$dirty}}</strong></p>
+	<br />
+	<p>myForm.$valid = <strong style="color: blue;">{{myForm.$valid}}</strong></p>
+	<p>myForm.$invalid = <strong style="color: red;">{{myForm.$invalid}}</strong></p>
+</div>
+</body>
+</html>
+
+<!-- 
+	valid 와 invalid 는 반대 개념.
+	valid 와 !valid 도 마찬가지
+ -->
