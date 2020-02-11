@@ -1,6 +1,7 @@
 package com.gura.spring05.shop.service;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.spring05.exception.NoDeliveryException;
 import com.gura.spring05.shop.dao.OrderDao;
 import com.gura.spring05.shop.dao.ShopDao;
 import com.gura.spring05.shop.dto.OrderDto;
@@ -37,8 +39,8 @@ public class ShopServiceImpl implements ShopService{
 	 * 	3. 트랜젝션을 적용할 서비스의 메서드에 @Transactional 어노테이션을 추가 한다. 
 	 */
 	//상품 구입 처리를 하는 비즈니스 로직
-	@Transactional
-	@Override
+	@Transactional	//하나라도 실패 하지않고 다 성공하면 커밋. 중간 하나라도 실패하면(DataAccessException이 발생하면) 롤백시킴(취소). 	
+	@Override		//=>DB에서 발생할 수도 있지만 필요하다면 프로그래머가 임의로 로직에 의해 발생 시킬수도 있다. DataAccessException을 상속받아서 커스텀 Exception을 만들 수 있다. Throw방식으로.
 	public void buy(HttpServletRequest request, ModelAndView mView) {
 		//로그인된 아이디
 		String id=(String)request.getSession().getAttribute("id");
@@ -61,7 +63,6 @@ public class ShopServiceImpl implements ShopService{
 		dto2.setId(id);
 		dto2.setCode(num);
 		dto2.setAddr("강남역 스타벅스");
-		orderDao.addOrder(dto2);
+		orderDao.addOrder(dto2);	
 	}
-	
 }

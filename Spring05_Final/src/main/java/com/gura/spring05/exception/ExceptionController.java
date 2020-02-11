@@ -26,15 +26,23 @@ public class ExceptionController {
 		mView.setViewName("error/forbidden");
 		return mView;
 	}	
+	//custom 예외 처리
+	@ExceptionHandler(NoDeliveryException.class)
+	public ModelAndView noDelivery(NoDeliveryException nde) {
+		ModelAndView mView=new ModelAndView();
+		mView.addObject("exception",nde);
+		mView.setViewName("error/data_access");
+		return mView;
+	}
 	
 	/*
 	 * 	@Repository 어노테이션이 작성된 Dao 에서 DB 관련 Exception 이 발생하면
 	 * 	Spring 프레임 워크가 DataAccessException type 의 예외를 발생시킨다.
 	 * 	예외 객체는 메서드의 인자로 전달되고 해당 예외 객체는 getMessage() 라는 
-	 * 	getter 메서드가 존재한다.
+	 * 	getter 메서드가 존재한다.	(EL로 getter 메서드를 사용할 수 있다!)
 	 *  해당 메서드를 호출하면 예외 메세지를 리턴해준다.
 	 */
-	@ExceptionHandler(DataAccessException.class)
+	@ExceptionHandler(DataAccessException.class)	//DB에서 SqlException이 발생하면 스프링이 DataAccessException으로 바꾸고 메세지를 전달할 수 있도록 한다.
 	public ModelAndView dataAccess(DataAccessException dae) {
 		ModelAndView mView=new ModelAndView();
 		// "exception" 이라는 키값으로 예외 객체를 담는다.
@@ -42,7 +50,7 @@ public class ExceptionController {
 		// view page 설정
 		mView.setViewName("error/data_access");		
 		return mView;
-	}
+	}	
 }
 
 //파일 삭제할 때 예외를 발생시키는 방법
