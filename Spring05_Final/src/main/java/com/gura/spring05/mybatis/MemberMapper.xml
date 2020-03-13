@@ -29,6 +29,13 @@
 		SET name=#{name}, addr=#{addr}
 		WHERE num=#{num}
 	</update>
+	
+	<select id="getList2" resultType="java.util.HashMap"> <!-- select 한 결과를 HashMap에 담아라! 칼럼명이 key 값이 되고 대문자로 들어간다.  -->
+		SELECT num, name, addr
+		FROM member
+		ORDER BY num ASC
+	</select>
+	
 </mapper>
 
 <!-- 
