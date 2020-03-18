@@ -14,4 +14,5 @@ public interface MemberDao {
 	
 	//안드로이드 테스트용 메소드
 	public List<Map<String, Object>> getList2();
+	public List<Map<String, Object>> memberGetList();
 }

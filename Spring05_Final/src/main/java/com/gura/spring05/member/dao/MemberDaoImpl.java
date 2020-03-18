@@ -49,8 +49,13 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Override
 	public List<Map<String, Object>> getList2() {
-		List<Map<String, Object>> list=session.selectList("member.getList2");
+		List<Map<String, Object>> list=session.selectList("member.getList2");	// List<Map>의 형태로 데이터가 담긴다.
 		return list;
+	}
+	
+	@Override
+	public List<Map<String, Object>> memberGetList() {
+		return session.selectList("member.memberGetList");	// 알아낸 사실. 만약 mapper에서 가져오는 이름이 겹치지 않는다면 앞에 namespace를 생략해도  찾아올 수 있다. => namespace는 mapper를 찾아주는 역할.
 	}
 }
 

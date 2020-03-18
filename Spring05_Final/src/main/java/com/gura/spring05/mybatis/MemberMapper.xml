@@ -36,6 +36,11 @@
 		ORDER BY num ASC
 	</select>
 	
+	<select id="memberGetList" resultType="java.util.HashMap">
+		SELECT num, name
+		FROM member
+		ORDER BY num ASC
+	</select>
 </mapper>
 
 <!-- 
